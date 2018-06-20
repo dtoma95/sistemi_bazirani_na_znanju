@@ -1,0 +1,34 @@
+<div ng-include="'angular/partials/MenadzerRestorana/menadzerRestoranaNavBar.html'"></div>
+
+<div ng-controller="assignSectionController" style="margin-left: 50px; width:700px;">
+
+<form class="form-horizontal">
+  <fieldset>
+    <legend>Assign section to bartender</legend>
+    
+     <div class="form-group">
+      <label for="selectBartender" class="col-lg-2 control-label">Waiter:</label>
+      <div class="col-lg-10">
+      	<select class="form-control" ng-model="shift.bartender" ng-options="item.email for item in konobariList">
+    		<option value="">Select waiter</option>
+		</select>     
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="selectSection" class="col-lg-2 control-label">Section:</label>
+      <div class="col-lg-10">
+      	<select class="form-control" ng-model="shift.section" ng-options="item.nazivReona for item in reoniList">
+    		<option value="">Select section</option>
+		</select>     
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="assignSection(shift)">Assign</button>
+      </div>
+    </div>
+   
+  </fieldset>
+</form>
+
+</div>

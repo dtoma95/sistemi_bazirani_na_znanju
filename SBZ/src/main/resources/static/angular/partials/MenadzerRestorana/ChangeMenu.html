@@ -1,0 +1,35 @@
+<form name="menuForm2" noValidate class="form-horizontal" style="width:500px; margin-left:50px;">
+  <fieldset>
+    <legend>Modify item in the menu list</legend>
+    <div class="modal-body">
+   	    <div class="form-group">
+	      <label for="modifyName1" class="col-lg-2 control-label">Item name:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="modifyName1" name="modifyName1" placeholder="Item name" ng-model="itemChanged.nazivStavke" required>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label for="modifyDescription1" class="col-lg-2 control-label">Item description:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="modifyDescription1" name="modifyDescription1" placeholder="Item description" ng-model="itemChanged.opisStavke" required>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label for="modifyCost1" class="col-lg-2 control-label">Item cost:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="modifyCost1" name="modifyCost1" placeholder="Item cost" ng-model="itemChanged.cenaStavke" ng-pattern="costPattern" required >
+	        <span ng-show="menuForm2.modifyCost1.$error.pattern" class="control-label" style="color:red">
+	            <span class="glyphicon glyphicon-remove-sign"></span>Cost is not valid!
+	        </span>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	    
+	      <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="saveMenu(itemChanged, menuForm2)">Save menu item</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+	    </div>
+    </div>
+  </fieldset>
+</form>

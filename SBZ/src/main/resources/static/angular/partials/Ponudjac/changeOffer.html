@@ -1,0 +1,54 @@
+<div>
+  <form name="changeForm" noValidate class="form-horizontal" style="width:500px; margin-left:50px;">
+	  <fieldset>
+	    <legend>Change offer</legend>
+      <div class="modal-body">
+      
+        <div class="form-group">
+	      <label for="inputCost" class="col-lg-2 control-label">Cost:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="inputCost" name="inputCost" placeholder="Cost" ng-model="iChange.cena" ng-pattern="costPattern"  required>
+	        <span ng-show="changeForm.inputCost.$error.pattern" class="control-label" style="color:red">
+	            <span class="glyphicon glyphicon-remove-sign"></span>Cost is not valid!
+	        </span>
+	      </div>
+	    </div>
+	    
+		 <div class="form-group">
+	        <label for="inputRokIsporuke" class="col-lg-2 control-label">Delivery time:</label>
+	        <div class="col-lg-6">
+	          <p class="input-group">
+	            <input id="inputRokIsporuke" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" ng-model="iChange.rokIsporuke" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+	            <span class="input-group-btn">
+	              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+	            </span>
+	          </p>
+	        </div>
+	      </div>
+
+		<div class="form-group">
+	      <label for="deliveryGuarantee" class="col-lg-2 control-label">Delivery guarantee:</label>
+	      <div class="col-lg-10">
+	      	<select class="form-control" ng-model="iChange.garancijaIsporuke">
+	      		<option value="">Delivery guarantee</option>
+	    		<option value="Yes">Yes</option>
+	    		<option value="No">No</option>
+			</select>
+	      </div>
+	    </div>
+	    
+	    <div class="form-group">
+	      <label for="inputDescription" class="col-lg-2 control-label">Description:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Description" ng-model="iChange.opis" required>
+	      </div>
+	    </div>
+	    
+	    <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="saveOffer(iChange, changeForm)">Save offer</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+      </div>
+    </fieldset>
+ </form>
+</div>

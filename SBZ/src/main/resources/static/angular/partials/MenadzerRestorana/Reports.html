@@ -1,0 +1,366 @@
+<div ng-include="'angular/partials/MenadzerRestorana/menadzerRestoranaNavBar.html'"></div>
+
+<uib-tabset active="active">
+  <uib-tab index="0" heading="Income reports">
+   	<div ng-controller="incomeController">
+
+		<form class="form-horizontal" style="margin-left: 50px; width:700px;">
+		  <fieldset>
+		    <legend>Incomes</legend>
+		    
+			<div class="form-group">
+		      <label class="col-lg-2 control-label">Income selection</label>
+		      <div class="col-lg-10">
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+		            For the whole restaurant
+		          </label>
+		        </div>
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+		            For the the exact waiter
+		          </label>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div id="datum1" class="form-group">
+		        <label for="inputPocetakPerioda1" class="col-lg-2 control-label">Start Date:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="inputPocetakPerioda1" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="income.pocetakPerioda" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+		      </div>
+		    
+		    <div id="datum2" class="form-group">
+		        <label for="inputKrajPerioda1" class="col-lg-2 control-label">End Date:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="inputKrajPerioda1" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="income.krajPerioda" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+		      </div>
+		    
+		    <div id="konobari" class="form-group">
+		      <label for="selectBartender" class="col-lg-2 control-label">Waiter:</label>
+		      <div class="col-lg-10">
+		      	<select class="form-control" ng-model="income.waiter" ng-options="item.email for item in konobariList">
+		    		<option value="">Select waiter</option>
+				</select>     
+		      </div>
+		    </div>
+		    
+		    <div id="restoran" class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button id="restaurantReport" type="submit" class="btn btn-primary" ng-click="restaurantReport(income)">Restaurant report</button>
+		      </div>
+		    </div>
+		    
+		    <div id="konobar" class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button id="waiterReport" type="submit" class="btn btn-primary" ng-click="waiterReport(income)">Waiter report</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+		
+		<div id="chartDiv1" style="margin-left: 50px; width:1200px; height:1200px">
+			<canvas id="myChart1"></canvas>
+		</div>
+		</div>
+   
+  </uib-tab>
+  
+  <uib-tab index="1" heading="Attendance reports">
+  	<div ng-controller="attendanceController">
+  
+  	<form class="form-horizontal" style="margin-left: 50px; width:700px;">
+	  <fieldset>
+	    <legend>Attendance</legend>
+	    
+		<div class="form-group">
+	      <label class="col-lg-2 control-label">Attendance view</label>
+	      <div class="col-lg-10">
+	        <div class="radio">
+	          <label>
+	            <input ng-click="change()" type="radio" name="optionsRadios" id="optionsRadios3" value="option1" checked>
+	            By day
+	          </label>
+	        </div>
+	        <div class="radio">
+	          <label>
+	            <input ng-click="change()" type="radio" name="optionsRadios" id="optionsRadios4" value="option2">
+	            By week
+	          </label>
+	        </div>
+	      </div>
+	    </div>
+	    
+	    <div id="posecenostDan" class="form-group">
+	        <label for="inputPocetakPeriodaDan" class="col-lg-2 control-label">Start Date:</label>
+	        <div class="col-lg-3">
+	          <p class="input-group">
+	            <input id="inputPocetakPeriodaDan" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" ng-model="attendance.pocetakPeriodaDan" is-open="popup1.opened" placeholder="dd/MM/yy" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+	            <span class="input-group-btn">
+	              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+	            </span>
+	          </p>
+	        </div>
+	      </div>
+	    
+	    <div id="posecenostNedelja" class="form-group">
+	        <label for="inputPocetakPeriodaNedelja" class="col-lg-2 control-label">Start Date:</label>
+	        <div class="col-lg-3">
+	          <p class="input-group">
+	            <input id="inputPocetakPeriodaNedelja" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="attendance.pocetakPeriodaNedelja" is-open="popup2.opened" placeholder="dd/MM/yy" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+	            <span class="input-group-btn">
+	              <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+	            </span>
+	          </p><br>
+		          <p id="labelWeek"></p>
+	        </div>
+	      </div>
+	    
+	    <div id="posecenostDanDugme" class="form-group">
+	      <div class="col-lg-10 col-lg-offset-2">
+	        <button id="attendanceReportDan" type="submit" class="btn btn-primary" ng-click="attendanceReport(attendance)">Attendance report by day</button>
+	      </div>
+	    </div>
+	    <div id="posecenostNedeljaDugme" class="form-group">
+	      <div class="col-lg-10 col-lg-offset-2">
+	        <button id="attendanceReportNedelja" type="submit" class="btn btn-primary" ng-click="attendanceReport(attendance)">Attendance report by week</button>
+	      </div>
+	    </div>
+	   
+	  </fieldset>
+	</form>
+
+	<div id="chartDiv2" style="margin-left: 50px; width:1200px; height:1200px">
+		<canvas id="myChart2"></canvas>
+	</div>
+
+	</div>
+  </uib-tab>
+  
+  <uib-tab index="2" heading="Restaurant marks">
+	  <div ng-controller="restaurantMarkController">
+	  	
+	  	<form class="form-horizontal" style="margin-left: 50px; width:700px;">
+		  <fieldset>
+		    <legend>Restaurant marks</legend>
+		    
+		    <div class="form-group">
+		      <label class="col-lg-2 control-label">Restaurant marks</label>
+		      <div class="col-lg-10">
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios5" value="option1" checked>
+		            By week
+		          </label>
+		        </div>
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios6" value="option2">
+		            By month
+		          </label>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div id="week1" class="form-group">
+		        <label for="inputWeek1" class="col-lg-2 control-label">Select week:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="inputWeek1" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="mark.period1" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>		            
+		          </p><br>
+		          <p id="labelWeek1"></p>
+		        </div>
+		      </div>
+		    
+		    <div id="month1" class="form-group">
+		        <label for="inputMonth1" class="col-lg-2 control-label">Select month:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="inputMonth1" type="text" class="form-control" uib-datepicker-popup="MM/yy" Placeholder="MM/yy" ng-model="mark.period2" is-open="popup2.opened" datepicker-options="{minMode: 'month'}" close-text="Close" alt-input-formats="altInputFormats" datepicker-mode="'month'" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+		      </div>
+		    
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="restaurantMarkReport(mark)">Restaurant marks</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+
+	<div id="chartDiv3" style="margin-left: 50px; width:1200px; height:1200px">
+		<canvas id="myChart3"></canvas>
+	</div>
+	  	
+  	  </div>
+  </uib-tab>
+  
+  <uib-tab index="3" heading="Waiter marks">
+	 <div ng-controller="waiterMarkController">
+	  	
+	  	<form class="form-horizontal" style="margin-left: 50px; width:700px;">
+		  <fieldset>
+		    <legend>Waiter marks</legend>
+		    
+		    <div class="form-group">
+		      <label for="inputIme" class="col-lg-2 control-label">Name:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputIme" placeholder="Name and Surname" ng-model="mark.username">
+		      </div>
+		    </div>
+		    
+		    <div class="form-group">
+		      <label class="col-lg-2 control-label">Waiter marks</label>
+		      <div class="col-lg-10">
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios7" value="option1" checked>
+		            By week
+		          </label>
+		        </div>
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios8" value="option2">
+		            By month
+		          </label>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div id="week2" class="form-group">
+		        <label for="inputWeek2" class="col-lg-4 control-label">Select week:</label>
+		        <div class="col-lg-5">
+		          <p class="input-group">
+		            <input id="inputWeek2" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="mark.period1" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>		            
+		          </p><br>
+		          <p id="labelWeek2"></p>
+		        </div>
+		      </div>
+		    
+		    <div id="month2" class="form-group">
+		        <label for="inputMonth2" class="col-lg-4 control-label">Select month:</label>
+		        <div class="col-lg-5">
+		          <p class="input-group">
+		            <input id="inputMonth2" type="text" class="form-control" uib-datepicker-popup="MM/yy" Placeholder="MM/yy" ng-model="mark.period2" is-open="popup2.opened" datepicker-options="{minMode: 'month'}" close-text="Close" alt-input-formats="altInputFormats" datepicker-mode="'month'" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+		      </div>
+		    
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="waiterMarkReport(mark)">Waiter marks</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+
+		<div id="chartDiv4" style="margin-left: 50px; width:1200px; height:1200px">
+			<canvas id="myChart4"></canvas>
+		</div>
+	  	
+  	  </div>
+  </uib-tab>
+  	
+  <uib-tab index="4" heading="Menu item marks">
+  	<div ng-controller="menuMarkController">
+	  	
+	  	<form class="form-horizontal" style="margin-left: 50px; width:700px;">
+		  <fieldset>
+		    <legend>Menu item marks</legend>
+		    
+		    <div class="form-group">
+		      <label for="inputMenuItem" class="col-lg-2 control-label">Name:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputMenuItem" placeholder="Menu item name" ng-model="mark.menuItemName">
+		      </div>
+		    </div>
+		    
+		    <div class="form-group">
+		      <label class="col-lg-2 control-label">Menu item marks</label>
+		      <div class="col-lg-10">
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios9" value="option1" checked>
+		            By week
+		          </label>
+		        </div>
+		        <div class="radio">
+		          <label>
+		            <input ng-click='change()' type="radio" name="optionsRadios" id="optionsRadios10" value="option2">
+		            By month
+		          </label>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div id="week3" class="form-group">
+		        <label for="inputWeek3" class="col-lg-4 control-label">Select week:</label>
+		        <div class="col-lg-5">
+		          <p class="input-group">
+		            <input id="inputWeek3" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" Placeholder="dd/MM/yy" ng-model="mark.period1" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>		            
+		          </p><br>
+		          <p id="labelWeek3"></p>
+		        </div>
+		      </div>
+		    
+		    <div id="month3" class="form-group">
+		        <label for="inputMonth2" class="col-lg-4 control-label">Select month:</label>
+		        <div class="col-lg-5">
+		          <p class="input-group">
+		            <input id="inputMonth2" type="text" class="form-control" uib-datepicker-popup="MM/yy" Placeholder="MM/yy" ng-model="mark.period2" is-open="popup2.opened" datepicker-options="{minMode: 'month'}" close-text="Close" alt-input-formats="altInputFormats" datepicker-mode="'month'" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+		      </div>
+		    
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="menuMarkReport(mark)">Menu item marks</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+
+		<div id="chartDiv5" style="margin-left: 50px; width:1200px; height:1200px">
+			<canvas id="myChart5"></canvas>
+		</div>
+	  	
+  	  </div>
+  </uib-tab>
+</uib-tabset>

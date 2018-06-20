@@ -1,0 +1,32 @@
+
+<div ng-include="'angular/partials/Radnik/konobarNavBar.html'"></div>
+
+<div ng-controller="konobarPregledController" style="margin-top: 100px; width:700px;" class="container center_div">
+
+<h3>Currently active orders:</h3>
+<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>Table</th>
+      <th>Order Time</th>
+      <th>State</th>
+      <th>View Details</th>
+      <th>Finish Order</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="i in items">
+		<td>{{i.sto}}</td>
+		<td>{{i.datum}}</td>
+		<td class="orderState{{i.state}}">{{i.state}}</td>
+		<td>
+			<button class="btn btn-primary" ng-click="viewItem(i)">View/Edit Details</button><br>
+		</td>
+		<td>
+			<button class="btn btn-primary" ng-click="finishPorudzbina(i)" ng-disabled="i.state == 'Incomplete'">Finish</button><br>
+		</td>
+	</tr>
+  </tbody>
+</table>
+
+</div>

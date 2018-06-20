@@ -1,0 +1,48 @@
+<div ng-include="'angular/partials/MenadzerRestorana/menadzerRestoranaNavBar.html'"></div>
+<div ng-controller="editRestaurantController" style="width:700px;">
+	
+<form class="form-horizontal" name="editForm" noValidate>
+  <fieldset>
+    <legend>Edit Restaurant</legend>
+    <div class="form-group">
+      <label for="inputName" class="col-lg-2 control-label">Name</label>
+      <div class="col-lg-10">
+      	<input type="text" class="form-control" name="inputName" placeholder="Name" ng-model="info.naziv" required />
+      	<span ng-show="editForm.inputName.$error.required" class="control-label" style="color:red">
+        	<span class="glyphicon glyphicon-remove-sign"></span>Required!
+        </span>
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputOpis" class="col-lg-2 control-label">Description</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" name="inputOpis" id="inputOpis" placeholder="Description" ng-model="info.opis" required></textarea>
+      	<span ng-show="editForm.inputOpis.$error.required" class="control-label" style="color:red">
+        	<span class="glyphicon glyphicon-remove-sign"></span>Required!
+        </span>
+      
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress" class="col-lg-2 control-label">Address</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" name="inputAddress" id="inputAddress" ng-model="info.adresa" required>
+        <span ng-show="editForm.inputAddress.$error.required" class="control-label" style="color:red">
+        	<span class="glyphicon glyphicon-remove-sign"></span>Required!
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="editRestoran(info, editForm)">Edit</button>
+      </div>
+    </div>
+   
+  </fieldset>
+</form>
+
+<div id="map" style="width:800px; height:800px; margin-top:50px; margin-left:50px;">
+    
+</div>
+	
+</div>

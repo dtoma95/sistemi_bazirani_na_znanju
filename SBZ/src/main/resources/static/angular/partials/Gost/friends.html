@@ -1,0 +1,56 @@
+<div ng-include="'angular/partials/Gost/gostNavBar.html'"></div>
+
+<div ng-controller="friendsController" class="container col-lg-10">
+    <div class="row col-lg-8" ng-show = "haveRequest">
+        <p><label for="request" class="col-lg-3 control-label">Requests:</label></p>
+    	<table class="col-lg-offset-1 col-lg-6 table">
+    	    <col width=50%>
+    	    <col width=10%>
+    	    <col width=10%>
+	        <tr ng-repeat="r in requests">
+	            <td>{{r.ime}} &nbsp; {{r.prezime}}</td> 
+	            <td><button class="btn btn-primary" ng-click="addFriend(r)">Accept Request</button></td>
+	            <td><button class="btn btn-primary" ng-click="removeRequest(r)">Decline Request</button></td>
+	        </tr>
+        </table>
+    </div>
+    <div class="row col-lg-12">
+	    <div class="form-group">
+	        <label for="addFriend" class="col-lg-12 control-label">Add Friend:</label>
+	        <input type="text" id="addFriend" class="form-control" placeholder="First or Last Name" ng-model="newFriend.email">
+	    </div>
+	    <p><button class="btn btn-primary" ng-click="sendRequest()">Send Request</button></p>
+	</div>
+    <br/>
+    <p><label for="friend" class="col-lg-2 control-label">Friends:</label></p>
+    <table class="table table-hover">
+        <col width = 30%>
+        <col width = 40%>
+        <col width = 15%>
+        <col width = 15%>
+	    <tr>
+	        <th>
+	            <a href="" ng-click="orderByField='ime'; reverseSort = !reverseSort">Ime</a>
+	            <span ng-show="orderByField == 'ime'">
+	                <span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span>
+	                <span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+	            </span>
+	        </th>
+	        <th>
+	            <a href="" ng-click="orderByField='prezime'; reverseSort = !reverseSort">Prezime</a>
+	            <span ng-show="orderByField == 'prezime'">
+	                <span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span>
+	                <span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+	            </span>
+	        </th>
+	        <th></th>
+	        <th></th>
+	    </tr>
+	    <tr ng:repeat="f in friends | orderBy: orderByField : reverseSort">
+	        <td>{{f.ime}}</td>
+	        <td>{{f.prezime}}</td>
+	        <td><a ng-href="#/profile?id={{f.id}}" class="btn btn-primary">View Profile</a></td>
+	        <td><button class="btn btn-danger" ng-click="removeFriend(f)">Remove</button></td>
+	    </tr>
+	</table>
+</div>

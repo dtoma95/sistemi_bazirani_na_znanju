@@ -1,0 +1,42 @@
+<div ng-include="'angular/partials/Gost/gostNavBar.html'"></div>
+
+<div ng-controller="restoranController"  style="margin-top: 200px; width:800px;" class="container center_div">
+	<label>Name: {{restoran.naziv}}</label>
+	<br/><br/>
+	<label>General rating: </label>
+	<span uib-rating ng-hide="general==0"  read-only="true" ng-model="general" max="5"  aria-labelledby="default-rating"></span>
+	<b ng-hide="general==0" >(<i>Rating:</i> {{general}})</b>
+	<p ng-hide="general!=0"> No ratings given yet.</p>
+	<br/>
+	<label>Friends rating: </label>
+	<span uib-rating ng-hide="friends==0" read-only="true" ng-model="friends" max="5"  aria-labelledby="default-rating"></span>
+	<b ng-hide="friends==0" >(<i>Rating:</i> {{friends}})</b>
+	<p ng-hide="friends!=0"> No ratings given by your frinds or yourself yet.</p>
+	<br/><br/>
+	<p><label>Description: {{restoran.opis}}</label> </p>
+	<br/>
+	<label>Food Menu:</label>
+    <table class="table table-hover">
+	    <tr><th>Name</th><th>Description</th><th>Price</th></tr>
+	    <tr ng:repeat="j in restoran.jelovnik.stavke">
+	       <td>{{j.nazivStavke}}</td>
+	       <td>{{j.opisStavke}}</td>
+	       <td>{{j.cenaStavke}}</td>
+	    </tr>
+	</table>
+	<br/>
+	<p><label>Drinks Menu:</label></p>
+	<table class="table table-hover">
+	    <tr><th>Name</th><th>Description</th><th>Price</th></tr>
+	    <tr ng:repeat="p in restoran.kartaPica.stavke">
+	       <td>{{p.nazivStavke}}</td>
+	       <td>{{p.opisStavke}}</td>
+	       <td>{{p.cenaStavke}}</td>
+	    </tr>
+	</table>
+	
+	<div id="map" style="width:800px; height:800px;">
+    
+	</div>
+	
+</div>

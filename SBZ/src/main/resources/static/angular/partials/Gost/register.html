@@ -1,0 +1,58 @@
+<div ng-controller="registerGostController" style="margin-top: 100px; width:700px;" class="container center_div">
+	
+<form class="form-horizontal" name="registerForm" novalidate>
+  <fieldset>
+    <legend>Register</legend>
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">*Email</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputEmail" name="email" placeholder="Email" ng-model="user.email" ng-pattern="emailPattern" required>
+        <span ng-show="registerForm.email.$error.pattern" class="control-label" style="color:red">
+            <span class="glyphicon glyphicon-remove-sign"></span>Email is not valid!
+        </span>
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputIme" class="col-lg-2 control-label">*First Name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputIme" name="ime" placeholder="First Name" ng-model="user.ime" required>
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputPrezime" class="col-lg-2 control-label">*Last Name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputPrezime" name="prezime" placeholder="Last Name" ng-model="user.prezime" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label">*Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="inputPassword" name="lozinka" placeholder="Password" ng-model="user.lozinka" ng-pattern="passwordPattern" ng-change="checkPasswords()" required>
+        <span ng-show="registerForm.lozinka.$error.pattern" class="control-label" style="color:red">
+            <span class="glyphicon glyphicon-remove-sign"></span>Password must have at least 8 characters, an upper and lowercase letter and a number.
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputConfirmPassword" class="col-lg-2 control-label">*Confirm Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="inputConfirmPassword" name="potvrdaLozinke" placeholder="Confirm Password" ng-model="user.potvrdaLozinke" ng-change="checkPasswords()" required>
+        <span ng-show="notSamePasswords" class="control-label" style="color:red">
+            <span class="glyphicon glyphicon-remove-sign"></span>Passwords are not matching!
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <br>
+      <label>Fields with * are required!</label>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="registerGost(user, registerForm)">Register</button>
+        <a href="#/" class="btn btn-danger">Back to login</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+	
+</div>

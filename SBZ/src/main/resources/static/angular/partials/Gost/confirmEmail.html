@@ -1,0 +1,37 @@
+<div ng-controller="confirmEmailController" style="margin-top: 200px; width:700px;" class="container center_div">
+
+<div ng-show="noToken">
+    <h3 ng-show="!userLoged">Wrong request</h3>
+    <h3 ng-show="userLoged">Please confirm email</h3>
+    <a href="#/" class="btn btn-danger" ng-show="!goToHome">Back to Login</a>
+</div>
+<div ng-show="!noToken">	
+	<form class="form-horizontal">
+	  <fieldset>
+	    <legend>Confirm email</legend>
+	    <!--<div class="form-group">
+	      <label for="inputToken" class="col-lg-2 control-label">Enter token:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="inputToken" placeholder="token" ng-model="info.token" >
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <div class="col-lg-10 col-lg-offset-2">
+	        <button type="submit" class="btn btn-primary" ng-click="confirmEmail(info)">Confirm Email</button>
+	        <a href="#/">Back to login</a>
+	      </div>
+	    </div>-->
+	    <div class="alert alert-success" role="alert" ng-show="successful">
+	        <strong>{{message}}</strong>
+	        <br/>
+	        <div ng-show="!goToHome">You are not logged in. <a href="#/"><strong>Please log in.</strong></a></div>
+	    </div>
+	    <div class="alert alert-danger" role="alert" ng-show="!successful"><strong>{{message}}</strong></div>
+	    <br/>
+	    <a href="#/" class="btn btn-danger" ng-show="!goToHome">Back to Login</a>
+	    <a href="#/gost" class="btn btn-success" ng-show="goToHome">Go to Home Page</a>
+	  </fieldset>
+	</form>
+</div>
+	
+</div>

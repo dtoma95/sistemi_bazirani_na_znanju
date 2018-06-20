@@ -1,0 +1,27 @@
+<div ng-include="'angular/partials/Gost/gostNavBar.html'"></div>
+
+<div  ng-controller="profileController" style="margin-top: 100px; width:750px;" class="container center_div">
+	<table class="table table-hover" ng-show="!updateMode">
+	    <col width = 33%>
+	    <tr>
+	        <th>First Name:</th>
+	        <td>{{user.ime}}</td>
+	        <td></td>
+	    </tr>
+	   <tr>
+	        <th>Last Name:</th>
+	        <td>{{user.prezime}}</td>
+	        <td></td>
+	    </tr>
+	    <tr>
+	        <th>Email:</th>
+	        <td>{{user.email}}</td>
+	        <td></td>
+	    </tr>
+	    <tr>
+	        <th>Number of visits:</th>
+	        <td>{{numberOfVisits}}</td>
+	        <td><td>
+	    </tr>
+	</table>
+</div>

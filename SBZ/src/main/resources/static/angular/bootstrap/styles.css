@@ -1,0 +1,82 @@
+#tables {
+	width: 900px;
+	height: 800px;
+	background-color: #D3D3D3;
+	float: left;
+	margin-left: 50px;
+	margin-top: 50px;
+	position:relative;
+}
+
+.draggable {
+  width: 130px;
+  height: 60px;
+  min-height: 6.5em;
+  margin: 2%;
+
+  color: white;
+
+  border-radius: 0.75em;
+  padding: 4%;
+}
+
+.clickradnik {
+  width: 130px;
+  height: 60px;
+  min-height: 6.5em;
+  margin: 2%;
+
+  color: white;
+  cursor: pointer;
+  border-radius: 0.75em;
+  padding: 4%;
+}
+
+.notmyreon {
+  width: 130px;
+  height: 60px;
+  min-height: 6.5em;
+  margin: 2%;
+  
+  opacity: 0.2;
+  color: white;
+  border-radius: 0.75em;
+  padding: 4%;
+}
+
+.clickgost {
+  width: 130px;
+  height: 60px;
+  min-height: 6.5em;
+  margin: 2%;
+  
+  color: white;
+  cursor: pointer;
+  border-radius: 0.75em;
+  padding: 4%;
+}
+
+.noclickgost {
+  width: 130px;
+  height: 60px;
+  min-height: 6.5em;
+  margin: 2%;
+  
+  opacity: 0.2;
+  cursor: not-allowed;
+  color: white;
+  border-radius: 0.75em;
+  padding: 4%;
+}
+
+.orderStateIncomplete{
+	color: red;
+}
+
+.orderStateCompleted{
+	color: green;
+}
+
+.orderStatePreparing{
+	color: cyan;
+}

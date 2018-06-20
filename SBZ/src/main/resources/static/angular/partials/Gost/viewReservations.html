@@ -1,0 +1,39 @@
+<div ng-include="'angular/partials/Gost/gostNavBar.html'"></div>
+
+<div  ng-controller="viewReservationsController" style="margin-top: 200px; width:700px;" class="container center_div">
+<table class="table table-hover">
+   	<tr>
+        <th>
+            <a href="" ng-click="orderByField='naziv'; reverseSort = !reverseSort">Restaurant
+            <span ng-show="orderByField == 'naziv'">
+                <span ng-show="!reverseSort">v</span>
+                <span ng-show="reverseSort">^</span>
+            </span>
+        </th>
+        <th>
+            <a href="" ng-click="orderByField='opis'; reverseSort = !reverseSort">Creator
+            <span ng-show="orderByField == 'opis'">
+                <span ng-show="!reverseSort">v</span>
+                <span ng-show="reverseSort">^</span>
+            </span>
+        </th>
+        <th>
+            <a href="" ng-click="orderByField='datum'; reverseSort = !reverseSort">Date and Time
+            <span ng-show="orderByField == 'datum'">
+                <span ng-show="!reverseSort">v</span>
+                <span ng-show="reverseSort">^</span>
+            </span>
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr ng:repeat="r in reservations | orderBy: orderByField : reverseSort">
+       <td>{{r.restoran.naziv}}</td>
+       <td>{{r.kreator.email}}</td>
+       <td>{{r.datumIVreme | date:'dd/MM/yyyy HH:mm'}}</td>
+       <td><a href="#/reservation?id={{r.id}}" class="btn btn-primary">Link</a></td>
+       <td><button ng-show="canDelete == true" class = "btn btn-danger" ng-click="delete(r)">Delete</button></td>
+    </tr>
+</table>
+	
+</div>

@@ -1,0 +1,125 @@
+<div ng-include="'angular/partials/MenadzerRestorana/menadzerRestoranaNavBar.html'"></div>
+
+<uib-tabset active="active">
+	<uib-tab index="0" heading="Edit menu">
+		<div ng-controller="MenuController">
+			<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+			  <thead>
+			    <tr>
+			      <th>Item name</th>
+			      <th>Item description</th>
+			      <th>Item cost</th>
+			      <th>Delete item</th>
+			      <th>Modify item</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr ng-repeat="i in items">
+					<td>{{i.nazivStavke}}</td>
+					<td>{{i.opisStavke}}</td>
+					<td>{{i.cenaStavke}}</td>
+					<td>
+						<button class="btn btn-primary" ng-click="removeItem(i.nazivStavke, i.opisStavke, i.cenaStavke, i.id)">Delete item</button><br>
+					</td>
+					<td>
+						<button class="btn btn-primary" ng-click="modifyItem(i)">Modify item</button><br>
+					</td>
+				</tr>
+			  </tbody>
+			</table> 
+			
+			<form class="form-horizontal" style="width:700px; margin-left:50px;" name="menuForm" noValidate>
+			  <fieldset>
+			    <legend>Add item to the menu list</legend>
+			    <div class="form-group">
+			      <label for="inputName1" class="col-lg-2 control-label">Item name:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputName1" name="inputName1" placeholder="Item name" ng-model="item.nazivStavke" required>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="inputDescription1" class="col-lg-2 control-label">Item description:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputDescription1" name="inputDescription1" placeholder="Item description" ng-model="item.opisStavke" required>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="inputCost1" class="col-lg-2 control-label">Item cost:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputCost1" name="inputCost1" placeholder="Item cost" ng-model="item.cenaStavke" ng-pattern="costPattern" required>
+			        <span ng-show="menuForm.inputCost1.$error.pattern" class="control-label" style="color:red">
+			            <span class="glyphicon glyphicon-remove-sign"></span>Cost is not valid!
+			        </span>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <div class="col-lg-10 col-lg-offset-2">
+			        <button type="submit" class="btn btn-primary" ng-click="addItem(item, menuForm)">Add</button><br>
+			      </div>
+			    </div>
+			  </fieldset>
+			</form>
+		</div>
+	</uib-tab>
+	
+	<uib-tab index="1" heading="Edit drinks">
+		<div ng-controller="beveregeController">
+			<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+			  <thead>
+			    <tr>
+			      <th>Item name</th>
+			      <th>Item description</th>
+			      <th>Item cost</th>
+			      <th>Delete item</th>
+			      <th>Modify item</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr ng-repeat="i in items">
+					<td>{{i.nazivStavke }}</td>
+					<td>{{i.opisStavke}}</td>
+					<td>{{i.cenaStavke}}</td>
+					<td>
+						<button class="btn btn-primary" ng-click="removeItem(i.nazivStavke, i.opisStavke, i.cenaStavke, i.id)">Delete item</button><br>
+					</td>
+					<td>
+						<button class="btn btn-primary" ng-click="modifyItem(i)">Modify item</button><br>
+					</td>
+				</tr>
+			  </tbody>
+			</table>
+			
+			<form class="form-horizontal" style="width:700px; margin-left:50px;" name="beveregeForm" noValidate>
+			  <fieldset>
+			    <legend>Add item to the drinks list</legend>
+			    <div class="form-group">
+			      <label for="inputName2" class="col-lg-2 control-label">Item name:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputName2" name="inputName2" placeholder="Item name" ng-model="item.nazivStavke" required>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="inputDescription2" class="col-lg-2 control-label">Item description:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputDescription2" name="inputDescription2" name placeholder="Item description" ng-model="item.opisStavke" required>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="inputCost2" class="col-lg-2 control-label">Item cost:</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" id="inputCost2" name="inputCost2" placeholder="Item cost" ng-model="item.cenaStavke" ng-pattern="costPattern" required >
+			        <span ng-show="beveregeForm.inputCost2.$error.pattern" class="control-label" style="color:red">
+			            <span class="glyphicon glyphicon-remove-sign"></span>Cost is not valid!
+			        </span>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <div class="col-lg-10 col-lg-offset-2">
+			        <button type="submit" class="btn btn-primary" ng-click="addItem(item, beveregeForm)">Add</button><br>
+			      </div>
+			    </div>
+			  </fieldset>
+			</form>
+		</div>
+	</uib-tab>
+</uib-tabset>

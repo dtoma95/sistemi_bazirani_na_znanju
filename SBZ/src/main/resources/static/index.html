@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html ng-app="restaurants">
+
+<head>
+	<link href="angular/bootstrap/toast.css" rel="stylesheet" />
+	<link href="angular/bootstrap/toastr.css" rel="stylesheet" />
+	<link href="angular/bootstrap/toastr.min.css" rel="stylesheet" />
+	<link href="angular/bootstrap/bootstrap.css" rel="stylesheet" />
+	<link href="angular/bootstrap/bootstrap.min.css" rel="stylesheet" />
+	<link href="angular/bootstrap/ngDatepicker.css" rel="stylesheet" />
+	<link href="angular/bootstrap/styles.css" rel="stylesheet" />
+	<link href="angular/bootstrap/awesomplete.css" rel="stylesheet" />
+</head> 
+
+<body>
+	
+	<div ng-view></div>
+
+<!--<script src="angular/js/angular.js"></script>
+<script src="angular/js/angular-route.js"></script>-->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.js"></script>
+<script src="angular/js/jquery.min.js"></script>
+<script src="angular/js/Chart.js"></script>
+<script src="angular/js/Chart.min.js"></script>
+<script src="angular/js/toast.js"></script>
+<script src="angular/js/toastr.js"></script>
+<script src="angular/js/toastr.min.js"></script>
+<script src="angular/app/app.js"></script>
+<script src="angular/js/ngDatepicker.js"></script>
+<script src="angular/js/moment-with-locales.min.js"></script>
+<script src="angular/js/ngDatepicker.min.js"></script>
+<script src="angular/js/interact.min.js"></script>
+<script src="angular/js/interact.js"></script>
+<script src="angular/js/ui-bootstrap-tpls-2.5.0.js"></script>
+<script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD9kHcB4k5TLjgyhQZrvGRHRMxx4VDvKD4&libraries=places' async defer></script>
+<script src="angular/js/awesomplete.js"></script>
+<script src="angular/js/awesomplete.min.js"></script>
+
+
+<!--Controllers-------------------------------------------------------------------- -->
+<script src="angular/app/controllers.js"></script>
+<script src="angular/app/controllers/radnikControllers.js"></script>
+<script src="angular/app/controllers/gostControllers.js"></script>
+<script src="angular/app/controllers/ponudjacControllers.js"></script>
+
+<script src="angular/app/controllers/MenadzerRestorana/beveregeMenuControllers.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/offersControllers.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/editRestaurantController.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/registerControllers.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/reportsControllers.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/scheduleControllers.js"></script>
+<script src="angular/app/controllers/MenadzerRestorana/tablesSectionsControllers.js"></script>
+<!-- ------------------------------------------------------------------------------ -->
+
+
+<!--Services----------------------------------------------------------------------- -->
+<script src="angular/app/services.js"></script>
+<script src="angular/app/services/radnikServices.js"></script>
+<script src="angular/app/services/gostServices.js"></script>
+<script src="angular/app/services/ponudjacServices.js"></script>
+
+<script src="angular/app/services/MenadzerRestorana/beveregeMenuServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/offersServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/editRestaurantServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/registerServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/reportsServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/scheduleServices.js"></script>
+<script src="angular/app/services/MenadzerRestorana/tablesSectionsServices.js"></script>
+<!-- ------------------------------------------------------------------------------ -->
+
+<script type="text/javascript">
+//target elements with the "draggable" class
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "2000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+interact('.clickradnik')
+  .on('tap', function (event) {
+    window.location = '#/addPorudzbina?id='+ event.target.id;
+    event.preventDefault();
+  });
+  
+interact('.clickgost')
+.on('tap', function (event) {
+  reserveTable(event);
+  //event.preventDefault();
+});
+
+
+function reserveTable(event) {
+	var tables = JSON.parse(localStorage.getItem("tables"));
+	var index = -1;
+	for (var i = 0; i < tables.length; i++){
+		if (event.target.id == tables[i]){
+			index = i;
+			break;
+		}
+	}
+	if (index == -1){
+		tables.splice(-1,0, event.target.id);
+		$('#' + event.target.id).css('opacity', 0.5);
+		console.log("Dodat sto: " + event.target.id);
+	} else {
+		tables.splice(index,1);
+		$('#' + event.target.id).css('opacity', 1);
+		console.log("Uklonjen sto: " + event.target.id);
+	}
+	localStorage.setItem("tables", JSON.stringify(tables));
+};
+
+interact('.draggable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    restrict: {
+      restriction: "parent",
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+    // enable autoScroll
+    autoScroll: true,
+    // call this function on every dragmove event
+    onmove: dragMoveListener
+  });
+  function dragMoveListener (event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)';
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  }
+  // this is used later in the resizing and gesture demos
+  window.dragMoveListener = dragMoveListener;
+</script>
+
+</body>
+</html>

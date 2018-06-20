@@ -1,0 +1,65 @@
+<div ng-controller="navBarController">
+	<div ng-include="getInclude()"></div>
+</div>
+
+
+
+<div ng-controller="updateRadnikInfoController" style="margin-top: 100px; width:700px;" class="container center_div">
+	
+<form name="editForm" class="form-horizontal">
+  <fieldset>
+    <legend>Update Info</legend>
+     <div class="form-group">
+      <label for="inputIme" class="col-lg-2 control-label">*First Name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" name="inputIme" placeholder="Name" ng-model="radnik.ime">
+        <span ng-show="editForm.inputIme.$error.required" class="control-label" style="color:red">
+            <span class="glyphicon glyphicon-remove-sign"></span>Required!
+        </span>
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputPrezime" class="col-lg-2 control-label">*Last name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" name="inputPrezime" placeholder="Surname" ng-model="radnik.prezime">
+      	<span ng-show="editForm.inputPrezime.$error.required" class="control-label" style="color:red">
+            <span class="glyphicon glyphicon-remove-sign"></span>Required!
+        </span>
+      
+      </div>
+    </div>
+    
+    <div class="form-group">
+		        <label for="datumRodj" class="col-lg-2 control-label">*Birth Date:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="datumRodj" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" placeholder="dd/MM/yy" ng-model="radnik.datumRodj" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span>
+		          </p>
+		        </div>
+	</div>
+    
+    <div class="form-group">
+      <label for="inputKbroj" class="col-lg-2 control-label">*Confection number</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputKbroj" placeholder="Kbroj" ng-model="radnik.kBroj" >
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputVelicina" class="col-lg-2 control-label">*Shoe size </label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputVelicina" placeholder="Shoe size" ng-model="radnik.velicina" >
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="updateRadnikInfo()">Update</button>
+        <a href="#/changePassword">Change Password</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+	
+</div>

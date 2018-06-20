@@ -1,0 +1,68 @@
+<div ng-include="'angular/partials/Gost/gostNavBar.html'"></div>
+
+<div ng-controller="reservationOrderController" style=" width:700px;" class="container center_div">
+    <p><label>Restaurant: {{reservation.restoran.naziv}}</label></p>
+	<br/>
+	<div class="row">
+	 <h3>Select Food menu items:</h3>
+	 <div style="overflow:scroll;height:150px;overflow:auto" class="col-sm-6">
+	 	<table class="table table-striped  table-hover">
+	    <tr><th>Name</th><th>Price</th><th>Add</th></tr>
+	    <tr ng:repeat="i in reservation.restoran.jelovnik.stavke">
+	       <td>{{i.nazivStavke}}</td>
+	       <td>{{i.cenaStavke}}</td>
+	       <td><button ng-click="addMenuItem(i)" class="btn btn-primary">Add</button></td>
+	    </tr>
+		</table>
+	  </div>
+	  <div style="overflow:scroll;height:150px;overflow:auto" class="col-sm-6">
+	 	<table class="table table-striped  table-hover">
+	    <tr><th>Name</th><th>Price</th><th>Add</th></tr>
+	    <tr ng:repeat="i in orderedFood">
+	       <td>{{i.nazivStavke}}</td>
+	       <td>{{i.cenaStavke}}</td>
+	       <td><button ng-click="removeMenuOrderItem(i, $index)" class="btn btn-primary">Remove</button></td>
+	    </tr>
+		</table>
+	  </div>
+	  </div>
+	  
+	  <div class="row">
+	   <h3>Select Drinks:</h3>
+	 <div style="overflow:scroll;height:150px;overflow:auto" class="col-sm-6">
+	 	<table class="table table-striped  table-hover">
+	    <tr><th>Name</th><th>Price</th><th>Add</th></tr>
+	    <tr ng:repeat="i in reservation.restoran.kartaPica.stavke">
+	       <td>{{i.nazivStavke}}</td>
+	       <td>{{i.cenaStavke}}</td>
+	       <td><button ng-click="addDrinksItem(i)" class="btn btn-primary">Add</button></td>
+	    </tr>
+		</table>
+	  </div>
+	  <div style="overflow:scroll;height:150px;overflow:auto" class="col-sm-6">
+	 	<table class="table table-striped  table-hover">
+	    <tr><th>Name</th><th>Price</th><th>Add</th></tr>
+	    <tr ng:repeat="i in orderedDrinks">
+	       <td>{{i.nazivStavke}}</td>
+	       <td>{{i.cenaStavke}}</td>
+	       <td><button ng-click="removeDrinksOrderItem(i, $index)" class="btn btn-primary">Remove</button></td>
+	    </tr>
+		</table>
+	  </div>
+	  </div>
+	  
+	  <div lcass="row">
+	    <input type="checkbox" ng-model="prepare"><label class="control-label">&nbsp;&nbsp;Prepare when we come</label>
+	  </div>
+	  
+	  <div class="row">
+	  <form class="form-horizontal">
+	   <fieldset>
+	      <div class="form-group">
+	        <br/>
+	        <button type="submit" class="btn btn-primary" ng-click="makeOrder()">Make order</button>
+	      </div>
+	   </fieldset>
+	  </form>
+	</div>
+</div>

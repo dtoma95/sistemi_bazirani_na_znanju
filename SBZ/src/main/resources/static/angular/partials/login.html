@@ -1,0 +1,27 @@
+<div ng-controller="loginController" style="margin-top: 100px; width:700px;" class="container center_div">
+	
+<form class="form-horizontal" name="loginForm" novalidate>
+  <fieldset>
+    <legend>Login</legend>
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputEmail" name="email" placeholder="Email" ng-model="user.email" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" ng-model="user.password" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="loginKorisnik(user, loginForm)">Login</button><br><br>
+        <a href="#/registerGost" class="btn btn-primary">Register</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+	
+</div>

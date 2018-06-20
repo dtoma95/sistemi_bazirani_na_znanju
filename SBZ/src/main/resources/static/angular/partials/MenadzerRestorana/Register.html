@@ -1,0 +1,215 @@
+<div ng-include="'angular/partials/MenadzerRestorana/menadzerRestoranaNavBar.html'"></div>
+
+<uib-tabset active="active">
+	<uib-tab index="0" heading="Register worker">
+		<div ng-controller="registerRadnikController" style="margin-left: 50px; width:700px;">
+			
+		
+		<form class="form-horizontal" name="registerForm" novalidate>
+		  <fieldset>
+		    <div class="form-group">
+		      <label for="inputEmail1" class="col-lg-2 control-label">*Email:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputEmail1" name="email" placeholder="Email" ng-model="user.email" ng-pattern="emailPattern" required>
+		        <span ng-show="registerForm.email.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Email is not valid!
+		        </span>
+		      </div>
+		    </div>
+		     <div class="form-group">
+		      <label for="inputIme1" class="col-lg-2 control-label">*Name:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputIme1" name="ime" placeholder="Name" ng-model="user.ime" required>
+		      </div>
+		    </div>
+		     <div class="form-group">
+		      <label for="inputPrezime1" class="col-lg-2 control-label">*Surname:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputPrezime1" name="prezime" placeholder="Surname" ng-model="user.prezime"  required>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputPassword1" class="col-lg-2 control-label">*Password:</label>
+		      <div class="col-lg-10">
+		        <input type="password" class="form-control" id="inputPassword1"  name="lozinka" placeholder="Password" ng-model="user.lozinka" ng-change="checkPasswords()" ng-pattern="passwordPattern" required>
+		        <span ng-show="registerForm.lozinka.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Password must have 8 characters, one big latter and one number!
+		        </span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputConfirmPassword" class="col-lg-2 control-label">*Confirm Password</label>
+		      <div class="col-lg-10">
+		        <input type="password" class="form-control" id="inputConfirmPassword" name="potvrdaLozinke" placeholder="Confirm Password" ng-model="user.potvrdaLozinke" ng-change="checkPasswords()" required>
+		        <span ng-show="notSamePasswords" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Passwords are not match!
+		        </span>
+		      </div>
+		    </div>
+		    
+		    <div class="form-group">
+		        <label for="datumRodj" class="col-lg-2 control-label">*Birth Date:</label>
+		        <div class="col-lg-3">
+		          <p class="input-group">
+		            <input id="datumRodj" type="text" class="form-control" name="datumRodj" uib-datepicker-popup="dd/MM/yy" placeholder="dd/MM/yy" ng-model="user.datumRodj" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+		            <span class="input-group-btn">
+		              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+		            </span><br>
+		          </p>
+		        </div>
+		      </div>
+		      
+		    <div class="form-group">
+		      <label for="inputKNumber" class="col-lg-2 control-label">*Confection Number:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputConfectionNumber" name="kBroj" placeholder="Confection number" ng-pattern="kBrojPattern" ng-model="user.kBroj" required>
+		        <span ng-show="registerForm.kBroj.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Confection number is not valid!
+		        </span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputShoeSize" class="col-lg-2 control-label">*Shoe Size:</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputShoeSize" name="velicina" placeholder="Shoe size" ng-pattern="velicinaPattern" ng-model="user.velicina" required>
+		        <span ng-show="registerForm.velicina.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Shoe size is not valid!
+		        </span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="selectRadnikUloga" class="col-lg-2 control-label">*Role:</label>
+		      <div class="col-lg-10">
+		      	<select id="userRole" ng-change="change()" class="form-control" ng-model="user.uloga" ng-options='option.value as option.name for option in optionsRole' ng-init="user.uloga = optionsRole[0].value">
+					<option value="" ng-if="false"></option>
+				</select>
+				<span ng-show="invalidWorkerRole" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>You need to select a role!
+		        </span>
+		      </div>
+		    </div>
+		    <div id="cooks" class="form-group">
+		      <label for="selectKuvarUloga" class="col-lg-2 control-label">*Cook Role:</label>
+		      <div class="col-lg-10">
+		      	<select id="cookRole" class="form-control" ng-model="user.ulogaKuvara" ng-options='option.value as option.name for option in optionsRoleCook' ng-init="user.ulogaKuvara = optionsRoleCook[0].value">
+					<option value="" ng-if="false"></option>
+				</select>
+				<span ng-show="invalidCookRole" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>You need to select a cook role!
+		        </span>
+		      </div>
+		    </div>
+		    
+		    <div class="form-group">
+		      <br>
+		      <label>Fields with * are required!</label>
+		    </div>
+		    
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="registerRadnik(user, registerForm)">Register</button>
+		      </div>
+		    </div>
+		  </fieldset>
+		</form>
+		
+		<form class="form-horizontal">
+		  <fieldset>
+		    <legend>Assign worker to restaurant</legend>
+		    
+		     <div class="form-group">
+		      <label for="selectWorker1" class="col-lg-2 control-label">Worker:</label>
+		      <div class="col-lg-10">
+		      	<select id="selectWorker1" class="form-control" ng-model="info.radnik" ng-options="item.email for item in radniciList">
+		    		<option value="">Select worker</option>
+				</select>     
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="assignRadnik(info)">Assign</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+		
+		<form class="form-horizontal">
+		  <fieldset>
+		    <legend>Fire worker from restaurant</legend>
+		    
+		     <div class="form-group">
+		      <label for="selectWorker2" class="col-lg-2 control-label">Worker:</label>
+		      <div class="col-lg-10">
+		      	<select id="selectWorker2" class="form-control" ng-model="info.radnik" ng-options="item.email for item in trenutniRadniciList">
+		    		<option value="">Select worker</option>
+				</select>     
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="fireRadnik(info)">Fire</button>
+		      </div>
+		    </div>
+		   
+		  </fieldset>
+		</form>
+			
+		</div>
+	</uib-tab>
+	
+	<uib-tab index="1" heading="Register bidder">
+		<div ng-controller="registerPonudjacController" style="margin-left: 50px; width:700px;">
+	
+		<form class="form-horizontal" name="registerPonudjacForm" novalidate>
+		  <fieldset>
+		    <div class="form-group">
+		      <label for="inputEmail2" class="col-lg-2 control-label">*Email</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputEmail2" name="email2" placeholder="Email" ng-model="user.email" ng-pattern="emailPattern" required>
+		        <span ng-show="registerPonudjacForm.email2.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Email is not valid!
+		        </span>
+		      </div>
+		    </div>
+		     <div class="form-group">
+		      <label for="inputIme2" class="col-lg-2 control-label">*Name</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputIme2" name="ime2" placeholder="Name" ng-model="user.ime" required>
+		      </div>
+		    </div>
+		     <div class="form-group">
+		      <label for="inputPrezime2" class="col-lg-2 control-label">*Surname</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" id="inputPrezime2" name="prezime2" placeholder="Surname" ng-model="user.prezime" required>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputPassword2" class="col-lg-2 control-label">*Password</label>
+		      <div class="col-lg-10">
+		        <input type="password" class="form-control" id="inputPassword2" name="lozinka2" placeholder="Password" ng-model="user.lozinka" ng-pattern="passwordPattern" ng-change="checkPasswords()" required>
+		      	<span ng-show="registerPonudjacForm.lozinka2.$error.pattern" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Passwords are not match!
+		        </span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputConfirmPassword" class="col-lg-2 control-label">*Confirm Password</label>
+		      <div class="col-lg-10">
+		        <input type="password" class="form-control" id="inputConfirmPassword" name="potvrdaLozinke2" placeholder="Confirm Password" ng-model="user.potvrdaLozinke" ng-change="checkPasswords()" required>
+		        <span ng-show="notSamePasswords" class="control-label" style="color:red">
+		            <span class="glyphicon glyphicon-remove-sign"></span>Passwords are not match!
+		        </span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <button type="submit" class="btn btn-primary" ng-click="registerPonudjac(user, registerPonudjacForm)">Register</button>
+		      </div>
+		    </div>
+		  </fieldset>
+		</form>
+			
+		</div>
+	</uib-tab>
+</uib-tabset>

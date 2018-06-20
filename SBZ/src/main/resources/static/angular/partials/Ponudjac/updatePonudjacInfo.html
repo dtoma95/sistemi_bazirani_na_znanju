@@ -1,0 +1,34 @@
+<div ng-include="'angular/partials/Ponudjac/ponudjacNavBar.html'"></div>
+
+
+<div ng-controller="updatePonudjacInfoController" style="margin-left: 50px; width:700px;" class="container center_div">
+	
+<form name="updateForm" noValidate class="form-horizontal">
+  <fieldset>
+    <legend>Update Info</legend>
+     <div class="form-group">
+      <label for="inputIme" class="col-lg-2 control-label">Name:</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputIme" name="inputIme" placeholder="Name" ng-model="user.ime" required>
+      </div>
+    </div>
+     <div class="form-group">
+      <label for="inputPrezime" class="col-lg-2 control-label">Surname:</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputPrezime" name="inputPrezime" placeholder="Surname" ng-model="user.prezime" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary" ng-click="updatePonudjacInfo(user, updateForm)">Update</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <a href="#/changePassword">Change password</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+	
+</div>

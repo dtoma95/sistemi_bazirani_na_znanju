@@ -1,0 +1,75 @@
+<div ng-include="'angular/partials/Ponudjac/ponudjacNavBar.html'"></div>
+
+<div ng-controller="offersPonudjacController" style="margin-left: 50px; width:700px;">
+
+<div ng-repeat="i in ponudeList">
+	<table id={{i.id}} style="width:700px;" class="table table-striped table-hover">
+	  <caption> Offer from {{i.pocetakPonude}} to {{i.krajPonude}} for restaurant "{{i.nazivRestorana}}" </caption>
+	  <thead>
+	    <tr>
+	      <th>Name</th>
+	      <th>Description</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr ng-repeat="j in i.namirnice">
+	    	<td>{{j.nazivNamirnice}}</td>
+			<td>{{j.kolicinaNamirnice }}</td>
+		</tr>
+	  </tbody>
+	</table>
+	
+	<form name="offerForm" noValidate class="form-horizontal" style="width:700px; margin-left:50px;">
+	  <fieldset>
+	    <legend>Send Offer</legend>
+
+	    <div class="form-group">
+	      <label for="inputCost" class="col-lg-2 control-label">Cost:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="inputCost" name="inputCena" placeholder="Cost" ng-model="offer.cena" ng-pattern="costPattern"  required>
+	        <span ng-show="offerForm.inputCena.$error.pattern" class="control-label" style="color:red">
+	            <span class="glyphicon glyphicon-remove-sign"></span>Cost is not valid!
+	        </span>
+	      </div>
+	    </div>
+	    
+		 <div class="form-group">
+	        <label for="inputRokIsporuke" class="col-lg-2 control-label">Delivery time:</label>
+	        <div class="col-lg-3">
+	          <p class="input-group">
+	            <input id="inputRokIsporuke" type="text" class="form-control" uib-datepicker-popup="dd/MM/yy" ng-model="offer.rokIsporuke" is-open="opened[$index]" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" readonly="readonly"/>
+	            <span class="input-group-btn">
+	              <button type="button" class="btn btn-default" ng-click="openDatePicker($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+	            </span>
+	          </p>
+	        </div>
+	      </div>
+
+		<div class="form-group">
+	      <label for="deliveryGuarantee" class="col-lg-2 control-label">Delivery guarantee:</label>
+	      <div class="col-lg-10">
+	      	<select class="form-control" ng-model="offer.garancijaIsporuke">
+	      		<option value="">Delivery guarantee</option>
+	    		<option value="Yes">Yes</option>
+	    		<option value="No">No</option>
+			</select>
+	      </div>
+	    </div>
+	    
+	    <div class="form-group">
+	      <label for="inputDescription" class="col-lg-2 control-label">Description:</label>
+	      <div class="col-lg-10">
+	        <input type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Description" ng-model="offer.opis" required>
+	      </div>
+	    </div>
+	    
+		<div class="form-group">
+	      <div class="col-lg-10 col-lg-offset-2">
+	        <button type="submit" class="btn btn-primary" ng-click="sendOffer(offer, i.nazivRestorana, i.id, offerForm)">Send offer</button>
+	      </div>
+	    </div>
+	  </fieldset>
+	</form>
+	</div>
+
+</div>
