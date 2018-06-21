@@ -32,7 +32,7 @@ public class Bolest implements Serializable {
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	protected BolestType type;
+	protected BolestType btype;
 
 	public Bolest() {}
 	
@@ -42,7 +42,7 @@ public class Bolest implements Serializable {
 		this.opis = opis;
 		this.simptomi = simptomi;
 		this.specificniSimptomi = specificniSimptomi;
-		this.type = type;
+		this.btype = type;
 	}
 
 	public Long getId() {
@@ -77,12 +77,12 @@ public class Bolest implements Serializable {
 		this.specificniSimptomi = specificniSimptomi;
 	}
 
-	public BolestType getType() {
-		return type;
+	public BolestType getBtype() {
+		return btype;
 	}
 
-	public void setType(BolestType type) {
-		this.type = type;
+	public void setBtype(BolestType type) {
+		this.btype = type;
 	}
 	
 	

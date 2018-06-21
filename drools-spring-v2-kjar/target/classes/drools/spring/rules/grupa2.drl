@@ -1,0 +1,46 @@
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+
+
+rule "Hipertenzija"
+	agenda-group "bolesti2"
+	salience(-100)
+    when
+    	$b : Bolest(opis == "Hipertenzija")
+    	$d : Dijagnoza(bolest == null, $pac: pacijent)
+    	$vp : Simptom(naziv == "Visok pritisak")
+    	$val : Number(intValue >= 10) from accumulate(
+        	$dd: Dijagnoza(
+        		simptomi contains $vp,
+        		$dd.timeDiffDays(6*30) == true
+        	)  from $pac.getDijagnoze(),
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("hiper");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+rule "Dijabetis"
+	agenda-group "bolesti2"
+	salience(-100)
+    when
+    	$b : Bolest(opis == "Dijabetis")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi)
+    	$val : Number(intValue == $b.getSimptomi().size()) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s ) from $simps,
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("dijabetis");
+    	System.out.println($val);
+        $d.setBolest($b);
+end

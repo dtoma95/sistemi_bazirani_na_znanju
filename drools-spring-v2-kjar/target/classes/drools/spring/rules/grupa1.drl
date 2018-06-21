@@ -1,0 +1,93 @@
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+
+
+rule "Prehlada"
+	agenda-group "bolesti"
+	salience($val)
+    when
+    	$b : Bolest(opis == "Prehlada")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi)
+    	$val : Number(intValue <=-4) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s)  from $simps,
+        	init(int total = 0;),
+        	action(total -= 1;if(total == (0-$b.getSimptomi().size())) total-=100;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("preh");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+rule "Groznica"
+	agenda-group "bolesti"
+	salience($val)
+    when
+    	$b : Bolest(opis == "Groznica")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi)
+    	$val : Number(intValue <=-4) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s || ($s.getNaziv() == "Temperatura"
+        	 && $s.getSvalue() > 38)) from $simps,
+        	init(int total = 0;),
+        	action(total -= 1;if(total == (0-$b.getSimptomi().size())) total-=100;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("groz");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+rule "Upala krajnika"
+	agenda-group "bolesti"
+	salience($val)
+    when
+    	$b : Bolest(opis == "Upala krajnika")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi)
+    	$val : Number(intValue <=-4) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s || ($s.getNaziv() == "Temperatura" &&
+        		 $s.getSvalue() >= 40 && $s.getSvalue() <= 41))  from $simps,
+        	init(int total = 0;),
+        	action(total -= 1;if(total == (0-$b.getSimptomi().size())) total-=100;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("kraj");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+rule "Sinusna infekcija"
+	agenda-group "bolesti"
+	salience($val)
+    when
+    	$b : Bolest(opis == "Sinusna infekcija")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi, $dijagnoze: pacijent.getDijagnoze())
+    	$initVal : Number() from accumulate(
+        	$dd: Dijagnoza(
+        		bolest.getOpis() == "Prehlada" || bolest.getOpis() == "Groznica",
+        		$dd.timeDiffDays(60) == true
+        	)  from $dijagnoze,
+        	init(int total = 0;),
+        	action(total = -1;),
+        	result((int)total)
+        )
+    	
+    	$val : Number(intValue <=-4) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s || ($s.getNaziv() == "Temperatura"
+        	 && $s.getSvalue() > 38)) from $simps,
+        	init(int total = (int)$initVal;),
+        	action(total -= 1;if(total == (0-$b.getSimptomi().size())) total-=100;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("sinus");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+    	/**/

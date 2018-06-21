@@ -28,7 +28,7 @@
 	<dependencies>
 		<dependency>
 	  		<groupId>drools-spring-v2</groupId>
-	  		<artifactId>drools-spring-v2-kjar</artifactId>
+	  		<artifactId>sbz-kjar</artifactId>
 	  		<type>jar</type>
 	  		<version>0.0.1-SNAPSHOT</version>
   		</dependency>

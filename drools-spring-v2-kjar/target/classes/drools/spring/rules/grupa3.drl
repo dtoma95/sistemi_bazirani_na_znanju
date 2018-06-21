@@ -1,0 +1,59 @@
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+import sbz.domain.Lek;
+import sbz.domain.LekType;
+
+rule "Hronicna bubrezna bolest"
+	agenda-group "bolesti3"
+	salience(-100)
+    when
+    	$b : Bolest(opis == "Hronicna bubrezna bolest")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi, $dijagnoze: pacijent.getDijagnoze())
+    	$val : Number(intValue >= 2) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s ) from $simps,
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+        (($dd: Dijagnoza(
+        		bolest.getOpis() == "Hipertenzija",
+        		$dd.timeDiffDays(30*6) == true
+        	)  from $dijagnoze) 
+        or (Dijagnoza(bolest.getOpis() == "Dijabetis")  from $dijagnoze)
+        )
+    then
+    	System.out.println("Hronicna bubrezna bolest");
+    	System.out.println($val);
+        $d.setBolest($b);
+end
+
+rule "Akutna bubrezna povreda"
+	agenda-group "bolesti3"
+	salience(-100)
+    when
+    	$b : Bolest(opis == "Akutna bubrezna povreda")
+    	$d : Dijagnoza(bolest == null, $simps: simptomi, $dijagnoze: pacijent.getDijagnoze())
+    	
+    	$val : Number(intValue >= 2) from accumulate(
+        	$s: Simptom($b.getSimptomi() contains $s ) from $simps,
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+        (($dd1 : Dijagnoza(
+        		bolest.getOpis().contains("Temperatura"),
+        		$dd1.timeDiffDays(14) == true
+        	)  from $dijagnoze)
+        or(
+        	Dijagnoza($lekovi : propisano, $dd1.timeDiffDays(21) == true)  from $dijagnoze and
+        	Lek(ltype == LekType.ANTIBIOTIK) from $lekovi)
+        or (Simptom(naziv == "Oporavlja se od operacije" ) from $simps)
+        )
+    then
+    	System.out.println("Akutna bubrezna povreda");
+    	System.out.println($val);
+        $d.setBolest($b);
+end

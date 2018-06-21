@@ -44,6 +44,13 @@ public class Dijagnoza implements Serializable  {
 	@Enumerated(EnumType.ORDINAL)
 	protected BolestType type;
 
+	public boolean timeDiffDays(long days) {
+		
+		Date currentDate = new Date();
+		long milidays = days * 24 * 60 * 60 * 1000L;
+		return currentDate.before(new Date((this.datum.getTime() + milidays)));
+	}
+	
 	public Long getId() {
 		return id;
 	}

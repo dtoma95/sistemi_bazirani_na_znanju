@@ -22,7 +22,7 @@ public class Lek implements Serializable {
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	protected LekType type;
+	protected LekType ltype;
 	
 	@ManyToMany()
 	private List<Sastojak> sastojci;
@@ -32,7 +32,7 @@ public class Lek implements Serializable {
 	public Lek(Long id, LekType type, List<Sastojak> sastojci) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.ltype = type;
 		this.sastojci = sastojci;
 	}
 
@@ -44,12 +44,12 @@ public class Lek implements Serializable {
 		this.id = id;
 	}
 
-	public LekType getType() {
-		return type;
+	public LekType getLtype() {
+		return ltype;
 	}
 
-	public void setType(LekType type) {
-		this.type = type;
+	public void setLtype(LekType type) {
+		this.ltype = type;
 	}
 
 	public List<Sastojak> getSastojci() {

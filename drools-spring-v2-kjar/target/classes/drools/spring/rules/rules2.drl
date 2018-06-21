@@ -1,1 +1,10 @@
 //created on: May 9, 2017
+import sbz.domain.Bolest;
+
+rule "da li radi"
+	agenda-group "test"
+    when
+    	$b : Bolest()
+    then
+    	System.out.println("radi");
+end

@@ -23,54 +23,98 @@ public class Simptom implements Serializable{
 	private String naziv;
 	
 	@Column(nullable = true)
-	private double value;
+	private double svalue;
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	protected SimptomType type;
+	protected SimptomType stype;
 
 	public Simptom() {}
 	
-	public Simptom(Long id, String naziv, double value, SimptomType type) {
+
+	public Simptom(Long id, String naziv, double svalue, SimptomType stype) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
-		this.value = value;
-		this.type = type;
+		this.svalue = svalue;
+		this.stype = stype;
 	}
+
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getNaziv() {
 		return naziv;
 	}
 
+
+
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
 
-	public double getValue() {
-		return value;
+
+
+	public double getSvalue() {
+		return svalue;
 	}
 
-	public void setValue(double value) {
-		this.value = value;
+
+
+	public void setSvalue(double svalue) {
+		this.svalue = svalue;
 	}
 
-	public SimptomType getType() {
-		return type;
+
+
+	public SimptomType getStype() {
+		return stype;
 	}
 
-	public void setType(SimptomType type) {
-		this.type = type;
+
+
+	public void setStype(SimptomType stype) {
+		this.stype = stype;
 	}
-	
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((naziv == null) ? 0 : naziv.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Simptom other = (Simptom) obj;
+		if (naziv == null) {
+			if (other.naziv != null)
+				return false;
+		} else if (!naziv.equals(other.naziv))
+			return false;
+		return true;
+	}
+
 	
 	
 }
