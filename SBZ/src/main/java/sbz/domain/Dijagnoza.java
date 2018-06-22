@@ -39,10 +39,6 @@ public class Dijagnoza implements Serializable  {
 	
 	@ManyToMany
 	private List<Lek> propisano;
-	
-	@Column(nullable = false)
-	@Enumerated(EnumType.ORDINAL)
-	protected BolestType type;
 
 	public boolean sadrziLek(LekType lt) {
 		for (Lek lek : propisano) {
@@ -116,18 +112,11 @@ public class Dijagnoza implements Serializable  {
 		this.propisano = propisano;
 	}
 
-	public BolestType getType() {
-		return type;
-	}
-
-	public void setType(BolestType type) {
-		this.type = type;
-	}
 
 	public Dijagnoza() {}
 	
 	public Dijagnoza(Long id, Date datum, Korisnik lekar, Pacijent pacijent, Bolest bolest, List<Simptom> simptomi,
-			List<Lek> propisano, BolestType type) {
+			List<Lek> propisano) {
 		super();
 		this.id = id;
 		this.datum = datum;
@@ -136,7 +125,6 @@ public class Dijagnoza implements Serializable  {
 		this.bolest = bolest;
 		this.simptomi = simptomi;
 		this.propisano = propisano;
-		this.type = type;
 	}
 	
 	

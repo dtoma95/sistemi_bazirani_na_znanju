@@ -28,7 +28,7 @@ public class GettersController {
 			value = "/getPacijent/{pacijentId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getPacijent(@PathVariable("pacientId") Long pacijentId) {
+	public ResponseEntity<?> getPacijent(@PathVariable("pacijentId") Long pacijentId) {
 		
 		Pacijent retval = this.gettersService.getPacijent(pacijentId);
 		return new ResponseEntity<Pacijent>(retval, HttpStatus.OK);

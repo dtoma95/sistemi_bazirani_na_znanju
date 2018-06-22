@@ -18,7 +18,7 @@ public interface LekarService {
 	
 	
 	
-	Dijagnoza addDijagnoza(Dijagnoza d);
+	Dijagnoza addDijagnoza(Dijagnoza d, long pacijentId);
 	Dijagnoza changeDijagnoza(Dijagnoza d);
 	void deleteDijagnoza(Dijagnoza d);
 	

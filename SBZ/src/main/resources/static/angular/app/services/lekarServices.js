@@ -36,3 +36,30 @@ restaurants.factory('lekarDijagnozaFactory', function($http) {
 	
 	return factory;
 });
+
+restaurants.factory('dijagnozaLekoviFactory', function($http) {
+	
+	var factory = {};
+	
+	factory.getLekovi = function() {
+		
+		return $http.get('/getLekovi');
+	}
+	
+	factory.getPacijent = function(id) {
+		
+		return $http.get('/getPacijent/'+id);
+	}
+	
+	factory.validiraj = function(d, id) {
+		
+		return $http.post('/lekar/validacija/'+id, d);
+	}
+	
+	factory.dodajDijagnozu = function(d, id) {
+		
+		return $http.post('/lekar/addDijagnoza/'+id, d);
+	}
+	
+	return factory;
+});

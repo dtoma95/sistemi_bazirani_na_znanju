@@ -3,6 +3,17 @@ insert into korisnik(id, username, ime, prezime, lozinka, uloga) values (2, 'lek
 
 insert into pacijent(id, ime, prezime) values (1, 'Mali', 'moler')
 
+insert into sastojak(id, naziv) values (1, 'Kikiriki')
+
+insert into lek(id, naziv, ltype) values (1, 'Antibiotik', 0)
+insert into lek(id, naziv, ltype) values (2, 'Analgetik', 1)
+insert into lek(id, naziv, ltype) values (3, 'Neki lek', 2)
+
+insert into lek_sastojci(lek_id, sastojci_id) values (3, 1)
+insert into pacijent_alergije_lek(pacijent_id, alergije_lek_id) values (1, 1)
+insert into pacijent_alergije_sastojci(pacijent_id, alergije_sastojci_id) values (1, 1)
+
+
 --GRUPA 1 -----
 ---- PREHLADA----
 insert into bolest(id, opis, btype) values (1, 'Prehlada', 0)
@@ -64,6 +75,56 @@ insert into bolest_simptomi(bolest_id, simptomi_id) values (4, 5)
 insert into bolest_simptomi(bolest_id, simptomi_id) values (4, 6)
 insert into bolest_simptomi(bolest_id, simptomi_id) values (4, 10)
 
+--GRUPA 2 -----
 ---HIPERTENZIJA-------
 insert into bolest(id, opis, btype) values (5, 'Hipertenzija', 1)
 insert into simptom(id, naziv, svalue, stype) values (15, 'Visok pritisak', 0, 0)
+
+
+---DIJABETIS-------
+insert into bolest(id, opis, btype) values (6, 'Dijabetis', 1)
+insert into simptom(id, naziv, svalue, stype) values (16, 'Cesto Uriniranje', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (17, 'Gubitak telesne tezine', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (18, 'Zamor', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (19, 'Mucnina', 0, 0)
+
+insert into bolest_simptomi(bolest_id, simptomi_id) values (6, 16)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (6, 17)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (6, 18)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (6, 19)
+
+--GRUPA 3 -----
+---Hronicna bubrezna bolest-------
+insert into bolest(id, opis, btype) values (7, 'Hronicna bubrezna bolest', 2)
+insert into simptom(id, naziv, svalue, stype) values (20, 'Nocturia', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (21, 'Gusenje', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (22, 'Otoci nogu i zglobova', 0, 0)
+insert into simptom(id, naziv, svalue, stype) values (23, 'Bol u grudima', 0, 0)
+
+insert into bolest_simptomi(bolest_id, simptomi_id) values (7, 18)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (7, 20)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (7, 21)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (7, 22)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (7, 23)
+
+insert into simptom(id, naziv, svalue, stype) values (24, 'Pacijent boluje od hipertenzije bar 6 meseci', 0, 2)
+insert into simptom(id, naziv, svalue, stype) values (25, 'Pacijent boluje od dijabetisa', 0, 2)
+insert into BOLEST_SPECIFICNI_SIMPTOMI (bolest_id,  SPECIFICNI_SIMPTOMI_ID) values (7, 24)
+insert into BOLEST_SPECIFICNI_SIMPTOMI (bolest_id,  SPECIFICNI_SIMPTOMI_ID) values (7, 25)
+
+---Akutna bubrezna povreda-------
+insert into bolest(id, opis, btype) values (8, 'Akutna bubrezna povreda', 2)
+insert into simptom(id, naziv, svalue, stype) values (26, 'Dijareja', 0, 0)
+
+insert into bolest_simptomi(bolest_id, simptomi_id) values (8, 18)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (8, 21)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (8, 22)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (8, 26)
+
+insert into simptom(id, naziv, svalue, stype) values (27, 'Oporavlja se od operacije', 0, 0)
+insert into BOLEST_SPECIFICNI_SIMPTOMI (bolest_id,  SPECIFICNI_SIMPTOMI_ID) values (8, 27)
+insert into simptom(id, naziv, svalue, stype) values (28, 'U poslednjih 14 dana dijagnostikovana bolest koji ima simptom povisene temperature', 0, 2)
+insert into simptom(id, naziv, svalue, stype) values (29, 'U poslednjih 21 dana dijagnostikovana bolest za koju prima antibiotike', 0, 2)
+insert into BOLEST_SPECIFICNI_SIMPTOMI (bolest_id,  SPECIFICNI_SIMPTOMI_ID) values (8, 28)
+insert into BOLEST_SPECIFICNI_SIMPTOMI (bolest_id,  SPECIFICNI_SIMPTOMI_ID) values (8, 29)
+

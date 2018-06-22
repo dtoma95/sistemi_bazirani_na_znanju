@@ -50,7 +50,7 @@ public class LekarController {
 		dijagnoza.setBolest(null);
 		retval.setGrupa1(this.lekarService.dijagnozaBolesti(dijagnoza, pacijentId, "bolesti"));
 		dijagnoza.setBolest(null);
-		//retval.setGrupa3(this.lekarService.dijagnozaBolesti(dijagnoza, pacijentId, "bolesti3"));
+		retval.setGrupa3(this.lekarService.dijagnozaBolesti(dijagnoza, pacijentId, "bolesti3"));
 		
 		return new ResponseEntity<DTOBolesti>(retval, HttpStatus.OK);
 	}
@@ -80,6 +80,20 @@ public class LekarController {
 		
 		List<Pacijent> retval= this.lekarService.izvestaj(grupa, lekar);
 		return new ResponseEntity<List<Pacijent>>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/addDijagnoza/{pacientId}",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addDijagnoza(@PathVariable("pacientId") Long pacijentId,
+			@RequestBody Dijagnoza dijagnoza) {
+		
+		Dijagnoza d =lekarService.addDijagnoza(dijagnoza, pacijentId);
+		
+		
+		return new ResponseEntity<Dijagnoza>(d, HttpStatus.OK);
 	}
 	
 }

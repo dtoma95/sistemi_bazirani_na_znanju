@@ -14,13 +14,17 @@ import org.springframework.stereotype.Service;
 
 import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
+import sbz.domain.Korisnik;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
 import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 import sbz.domain.SimptomType;
+import sbz.domain.Uloga;
 import sbz.exceptions.BadRequestException;
 import sbz.repository.BolestRepository;
+import sbz.repository.DijagnozaRepository;
+import sbz.repository.KorisnikRepository;
 import sbz.repository.PacijentRepository;
 import sbz.repository.SimptomRepository;
 
@@ -39,6 +43,12 @@ public class LekarServiceImpl implements LekarService {
 	
 	@Autowired
 	private  PacijentRepository pacijentRepository;
+	
+	@Autowired
+	private  KorisnikRepository korisnikRepository;
+	
+	@Autowired
+	private  DijagnozaRepository dijagnozaRepository;
 	
 	@Override
 	public Bolest dijagnozaBolesti(Dijagnoza d, long pacijentId, String grupa) {
@@ -59,13 +69,26 @@ public class LekarServiceImpl implements LekarService {
 		else
 			System.out.println("null");
 		
+		kieSession.delete(kieSession.getFactHandle(d));
 		
-		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
 		return d.getBolest();
 	}
 	
 	@Override
-	public Dijagnoza addDijagnoza(Dijagnoza d) {
+	public Dijagnoza addDijagnoza(Dijagnoza d, long pacijentId) {
+		Korisnik k = korisnikRepository.findByUsername(d.getLekar().getUsername());
+		if (k == null || !(k.getUloga().equals(Uloga.LEKAR))) {
+			throw new BadRequestException("Nepostojeci lekar!");
+		}
+		d.setLekar(k);
+		Pacijent p = pacijentRepository.findOne(pacijentId);
+		if (p == null) {
+			throw new BadRequestException("Nepostojeci pacijent!");
+		}
+		d.setPacijent(p);
+		d.setDatum(new Date());
+		
+		this.dijagnozaRepository.save(d);
 		
 		return d;
 	}
@@ -120,7 +143,8 @@ public class LekarServiceImpl implements LekarService {
 		kieSession.getAgenda().getAgendaGroup("alergijaLek").setFocus();
 		System.out.println(kieSession.fireAllRules());
 		
-		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		kieSession.delete(kieSession.getFactHandle(d));
+		
 		return (List<Lek>) kieSession.getGlobal( "retLek");
 	}
 
@@ -142,7 +166,8 @@ public class LekarServiceImpl implements LekarService {
 		kieSession.getAgenda().getAgendaGroup("alergijaSastojak").setFocus();
 		System.out.println(kieSession.fireAllRules());
 		
-		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		kieSession.delete(kieSession.getFactHandle(d));
+		
 		return (List<Sastojak>) kieSession.getGlobal("retSastojak");
 	}
 
