@@ -1,5 +1,7 @@
-insert into korisnik(id, username, ime, prezime, lozinka, uloga) values (1, 'admin', 'Stefan', 'Colic', 'admin', 0)
+insert into korisnik(id, username, ime, prezime, lozinka, uloga) values (1, 'admin', 'Admin', 'Admin', 'admin', 0)
+insert into korisnik(id, username, ime, prezime, lozinka, uloga) values (2, 'lekar', 'Dr', 'Dre', 'lekar', 1)
 
+insert into pacijent(id, ime, prezime) values (1, 'Mali', 'moler')
 
 --GRUPA 1 -----
 ---- PREHLADA----

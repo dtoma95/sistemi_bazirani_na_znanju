@@ -9,10 +9,10 @@ rule "Prehlada"
 	agenda-group "bolesti"
 	salience($val)
     when
-    	$b : Bolest(opis == "Prehlada")
+    	$b : Bolest(opis == "Prehlada", $bsimptomi : simptomi)
     	$d : Dijagnoza(bolest == null, $simps: simptomi)
     	$val : Number(intValue <=-4) from accumulate(
-        	$s: Simptom($b.getSimptomi() contains $s)  from $simps,
+        	$s: Simptom($bsimptomi contains $s)  from $simps,
         	init(int total = 0;),
         	action(total -= 1;if(total == (0-$b.getSimptomi().size())) total-=100;),
         	result((int)total)
@@ -43,7 +43,7 @@ rule "Groznica"
 end
 
 rule "Upala krajnika"
-	agenda-group "bolesti"
+	agenda-group "bolesti1"
 	salience($val)
     when
     	$b : Bolest(opis == "Upala krajnika")
@@ -65,7 +65,7 @@ rule "Sinusna infekcija"
 	agenda-group "bolesti"
 	salience($val)
     when
-    	$b : Bolest(opis == "Sinusna infekcija")
+    	$b : Bolest(opis == "Sinusna infekcija", $bsimptomi : simptomi)
     	$d : Dijagnoza(bolest == null, $simps: simptomi, $dijagnoze: pacijent.getDijagnoze())
     	$initVal : Number() from accumulate(
         	$dd: Dijagnoza(

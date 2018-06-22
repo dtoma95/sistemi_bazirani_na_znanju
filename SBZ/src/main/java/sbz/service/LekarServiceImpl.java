@@ -2,6 +2,7 @@ package sbz.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
@@ -13,15 +14,20 @@ import org.springframework.stereotype.Service;
 
 import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
+import sbz.domain.Lek;
 import sbz.domain.Pacijent;
+import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 import sbz.domain.SimptomType;
+import sbz.exceptions.BadRequestException;
 import sbz.repository.BolestRepository;
+import sbz.repository.PacijentRepository;
 import sbz.repository.SimptomRepository;
 
 @Service
 public class LekarServiceImpl implements LekarService {
-
+	private HashMap<String, KieSession> sesije = new HashMap<String, KieSession>();
+	
 	@Autowired
 	private  KieContainer kieContainer;
 	
@@ -30,6 +36,33 @@ public class LekarServiceImpl implements LekarService {
 	
 	@Autowired
 	private  SimptomRepository simptomRepository;
+	
+	@Autowired
+	private  PacijentRepository pacijentRepository;
+	
+	@Override
+	public Bolest dijagnozaBolesti(Dijagnoza d, long pacijentId, String grupa) {
+		KieSession kieSession = sesije.get(d.getLekar().getUsername());
+
+		Pacijent p = pacijentRepository.findOne(pacijentId);
+		if (p == null) {
+			throw new BadRequestException("Nepostojeci pacijent!");
+		}
+		
+		d.setPacijent(p);
+		kieSession.insert(d);
+		
+		kieSession.getAgenda().getAgendaGroup(grupa).setFocus();
+		System.out.println(kieSession.fireAllRules());
+		if(d.getBolest() != null)
+			System.out.println(d.getBolest().getOpis());
+		else
+			System.out.println("null");
+		
+		
+		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		return d.getBolest();
+	}
 	
 	@Override
 	public Dijagnoza addDijagnoza(Dijagnoza d) {
@@ -52,10 +85,77 @@ public class LekarServiceImpl implements LekarService {
 		
 		Simptom s = new Simptom(1L, "Kasalj", 0,  SimptomType.NORMAL);
 		b.getSimptomi().add(s);
+		
+		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Pacijent> izvestajHronicnaOboljenja() { //izvestajHronicnaOboljenja
+	public List<Pacijent> izvestaj(String grupa, String username) { //izvestajHronicnaOboljenja
+		KieSession kieSession = sesije.get(username);
+		
+		kieSession.setGlobal( "retPacijenti", new ArrayList<Pacijent>());
+		kieSession.getAgenda().getAgendaGroup(grupa).setFocus();
+		System.out.println(kieSession.fireAllRules());
+		
+		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		return (List<Pacijent>) kieSession.getGlobal( "retPacijenti");
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lek> validacijaLeka(Dijagnoza d, long pacijentId) {
+		KieSession kieSession = sesije.get(d.getLekar().getUsername());
+		
+		Pacijent p = pacijentRepository.findOne(pacijentId);
+		if (p == null) {
+			throw new BadRequestException("Nepostojeci pacijent!");
+		}
+		
+		d.setPacijent(p);
+		kieSession.insert(d);
+		
+		
+		kieSession.setGlobal( "retLek", new ArrayList<Lek>());
+		kieSession.getAgenda().getAgendaGroup("alergijaLek").setFocus();
+		System.out.println(kieSession.fireAllRules());
+		
+		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		return (List<Lek>) kieSession.getGlobal( "retLek");
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Sastojak> validacijaSastojaka(Dijagnoza d, long pacijentId) {
+		KieSession kieSession = sesije.get(d.getLekar().getUsername());
+		
+		Pacijent p = pacijentRepository.findOne(pacijentId);
+		if (p == null) {
+			throw new BadRequestException("Nepostojeci pacijent!");
+		}
+		
+		d.setPacijent(p);
+		kieSession.insert(d);
+		
+		
+		kieSession.setGlobal( "retSastojak", new ArrayList<Sastojak>());
+		kieSession.getAgenda().getAgendaGroup("alergijaSastojak").setFocus();
+		System.out.println(kieSession.fireAllRules());
+		
+		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
+		return (List<Sastojak>) kieSession.getGlobal("retSastojak");
+	}
+
+	public HashMap<String, KieSession> getSesije() {
+		return sesije;
+	}
+
+	public void setSesije(HashMap<String, KieSession> sesije) {
+		this.sesije = sesije;
+	}
+	
+	@Override
+	public void test() {
 		KieSession kieSession = kieContainer.newKieSession();
 		List<Bolest> bolesti = (List<Bolest>) bolestRepository.findAll();
 		for (Bolest b : bolesti) {
@@ -108,29 +208,5 @@ public class LekarServiceImpl implements LekarService {
 			System.out.println(d.getBolest().getOpis());
 		else
 			System.out.println("null");
-		
-		
-		//kieSession.(kieSession.getFactHandle(d.getSimptomi()));
-		return null;
 	}
-
-	@Override
-	public List<Pacijent> izvestajZavisnici() {
-		KieSession kieSession = kieContainer.newKieSession();
-		Simptom s = new Simptom(1L, "boli glava :(", 0,  SimptomType.NORMAL);
-		System.out.println(s.getSvalue());
-		
-		kieSession.insert(s);
-		System.out.println(kieSession.fireAllRules());
-		
-		System.out.println(s.getSvalue());
-		return null;
-	}
-
-	@Override
-	public List<Pacijent> izvestajImunitet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

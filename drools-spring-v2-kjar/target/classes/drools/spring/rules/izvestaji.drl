@@ -1,0 +1,73 @@
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+import sbz.domain.Lek;
+import sbz.domain.LekType;
+import sbz.domain.Pacijent;
+import sbz.domain.Korisnik;
+import java.util.List;
+import java.util.ArrayList;
+
+
+global List<Pacijent> retPacijenti;
+
+rule "Hronicna oboljenja"
+	agenda-group "izvestaj1"
+    when
+    	$b : Bolest(opis != "Prehlada", opis != "Groznica")
+    	$p : Pacijent($dijagnoze: dijagnoze)
+    	$val : Number(intValue > 5) from accumulate(
+        	$dd: Dijagnoza($dd.timeDiffDays(365*2) == true,
+        		bolest.getOpis() == $b.getOpis()) from $dijagnoze,
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+    then
+    	System.out.println("Hronicna oboljenja");
+    	System.out.println($val);
+        retPacijenti.add($p);
+end
+
+rule "Moguci zavisnici"
+	agenda-group "izvestaj2"
+    when
+    	$p : Pacijent($dijagnoze1: dijagnoze)
+    	$dijagnoze : List(size >= 6) from collect 
+    		($dd: Dijagnoza($dd.timeDiffDays(6*30) == true, 
+    			$dd.sadrziLek(LekType.ANALGETIK) == true)  from $dijagnoze1)
+    	$lis : List(size >= 3) from accumulate(
+        	Dijagnoza($lekar: lekar)  from $dijagnoze,
+        	init(List<Korisnik> lista = new ArrayList<Korisnik>();),
+        	action(if(!(lista.contains($lekar)))lista.add($lekar);),
+        	result(lista)
+        )
+    then
+    	System.out.println("Moguci zavisnici");
+    	System.out.println($lis.size());
+        retPacijenti.add($p);
+end
+
+rule "Oslabljeni imunitet"
+	agenda-group "izvestaj3"
+    when
+    	$p : Pacijent($dijagnoze1: dijagnoze)
+    	$dijagnoze : List(size >= 10) from collect 
+    		($dd: Dijagnoza($dd.timeDiffDays(12*30) == true)  from $dijagnoze1)
+    	$lis : List(size >= 2) from accumulate(
+        	Dijagnoza($bolest: bolest)  from $dijagnoze,
+        	init(List<Bolest> lista = new ArrayList<Bolest>();),
+        	action(if(!(lista.contains($bolest)))lista.add($bolest);),
+        	result(lista)
+        )
+        forall(
+        	Dijagnoza($lekovi: propisano)  from $dijagnoze
+        	Lek(ltype == LekType.ANTIBIOTIK) from $lekovi
+        )
+    then
+    	System.out.println("Oslabljeni imunitet");
+    	System.out.println($lis.size());
+        retPacijenti.add($p);
+end

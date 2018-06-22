@@ -3,7 +3,7 @@ restaurants.factory('loginFactory', function($http) {
 	var factory = {};
 	
 	factory.loginKorisnik = function(user) {
-		return $http.post('/login', {"email": user.email, "password": user.password } );
+		return $http.post('/login', {"username": user.email, "lozinka": user.password } );
 	};
 	
 	return factory;

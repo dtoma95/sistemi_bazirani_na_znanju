@@ -44,6 +44,15 @@ public class Dijagnoza implements Serializable  {
 	@Enumerated(EnumType.ORDINAL)
 	protected BolestType type;
 
+	public boolean sadrziLek(LekType lt) {
+		for (Lek lek : propisano) {
+			if(lek.getLtype().equals(lt))
+				return true;
+		}
+		return false;
+	}
+	
+	
 	public boolean timeDiffDays(long days) {
 		
 		Date currentDate = new Date();

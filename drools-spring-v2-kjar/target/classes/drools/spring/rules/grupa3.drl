@@ -48,7 +48,7 @@ rule "Akutna bubrezna povreda"
         		$dd1.timeDiffDays(14) == true
         	)  from $dijagnoze)
         or(
-        	Dijagnoza($lekovi : propisano, $dd1.timeDiffDays(21) == true)  from $dijagnoze and
+        	$dd2 : Dijagnoza($lekovi : propisano, $dd2.timeDiffDays(21) == true)  from $dijagnoze and
         	Lek(ltype == LekType.ANTIBIOTIK) from $lekovi)
         or (Simptom(naziv == "Oporavlja se od operacije" ) from $simps)
         )

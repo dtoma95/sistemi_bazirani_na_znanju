@@ -1,0 +1,45 @@
+//created on: May 9, 2017
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+import sbz.domain.Lek;
+import sbz.domain.Sastojak;
+import sbz.domain.LekType;
+import sbz.domain.Pacijent;
+import java.util.List;
+
+global List<Lek> retLek;
+global List<Sastojak> retSastojak;
+
+rule "da li radi"
+	agenda-group "test"
+    when
+    	$b : Bolest()
+    then
+    	System.out.println("radi");
+end
+
+rule "Validacija alergije na lekove"
+	agenda-group "alergijaLek"
+    when
+    	$d : Dijagnoza($pac : pacijent, $lekovi: propisano)
+    	$l : Lek($pac.getAlergijeLek() contains $l) from $lekovi
+    then
+    	System.out.println("los lek");
+    	System.out.println($l.getNaziv());
+        retLek.add($l);
+end
+
+rule "Validacija alergije na sastojke"
+	agenda-group "alergijaSastojak"
+    when
+    	$d : Dijagnoza($pac : pacijent, $lekovi: propisano)
+    	$l : Lek($sastojci: sastojci) from $lekovi
+    	$s : Sastojak($pac.getAlergijeSastojci() contains $s) from $sastojci
+    then
+    	System.out.println("los Sastojak");
+    	System.out.println($s.getNaziv());
+        retSastojak.add($s);
+end

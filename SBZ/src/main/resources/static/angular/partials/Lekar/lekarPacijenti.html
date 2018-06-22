@@ -1,0 +1,32 @@
+
+<div ng-include="'angular/partials/Lekar/lekarNavBar.html'"></div>
+
+<div ng-controller="lekarPacijentiController" style="margin-top: 100px; width:700px;" class="container center_div">
+
+<h3>Pacijenti:</h3>
+<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Pregled</th>
+      <th>Dijagnoza</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="i in items">
+		<td>{{i.id}}</td>
+		<td>{{i.ime}}</td>
+		<td>{{i.prezime}}</td>
+		<td>
+			<button class="btn btn-primary" ng-click="viewItem(i)">Pregled</button><br>
+		</td>
+		<td>
+			<button class="btn btn-primary" ng-click="dijagnoza(i)" >Dijagnoza</button><br>
+		</td>
+	</tr>
+  </tbody>
+</table>
+
+</div>
