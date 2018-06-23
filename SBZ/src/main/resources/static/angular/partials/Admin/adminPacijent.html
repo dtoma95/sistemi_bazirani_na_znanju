@@ -1,0 +1,113 @@
+<div ng-include="'angular/partials/Admin/adminNavBar.html'"></div>
+
+<div ng-controller="adminPacijentController"
+	style="margin-left: 50px; width: 700px;">
+
+	<h3>Pacijent:</h3>
+	<form class="form-horizontal" name="registerForm" novalidate>
+		<fieldset>
+		
+			<div class="form-group">
+				<label for="inputIme1" class="col-lg-2 control-label">*Name:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputIme1" name="ime"
+						placeholder="Ime" ng-model="user.ime" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPrezime1" class="col-lg-2 control-label">*Surname:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputPrezime1"
+						name="prezime" placeholder="Prezime" ng-model="user.prezime"
+						required>
+				</div>
+			</div>
+			<div class = "row">
+			<div class="col-sm-6">
+				<h4>Alergije na lekove:</h4>
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Ukloni</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="i in item.alergijeLek">
+								<td>{{i.naziv}}</td>
+								<td><button ng-click="removeLek(i)"
+										class="btn btn-primary">Ukolni</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<h4>Izaberi Lekove:</h4>
+					<table class="table table-striped  table-hover">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Add</th>
+							</tr>
+						</thead>
+						<tr ng:repeat="i in lekovi | orderBy:'+naziv'">
+							<td>{{i.naziv}}</td>
+							<td><button ng-click="addLek(i)" class="btn btn-primary">Dodaj</button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col-sm-6">
+				<h4>Alergije na sastojke:</h4>
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Ukloni</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="i in item.alergijeSastojci">
+								<td>{{i.naziv}}</td>
+								<td><button ng-click="removeSastojak(i)"
+										class="btn btn-primary">Ukolni</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<h4>Izaberi Sastojke:</h4>
+					<table class="table table-striped  table-hover">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Add</th>
+							</tr>
+						</thead>
+						<tr ng:repeat="i in sastojci | orderBy:'+naziv'">
+							<td>{{i.naziv}}</td>
+							<td><button ng-click="addSastojak(i)" class="btn btn-primary">Dodaj</button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-success"
+						ng-click="submit(item, registerForm)">Submit</button>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>

@@ -1,0 +1,80 @@
+<div ng-include="'angular/partials/Admin/adminNavBar.html'"></div>
+
+<div ng-controller="registerKorisnikController"
+	style="margin-left: 50px; width: 700px;">
+
+	<h3>Registracija novih korisnika:</h3>
+	<form class="form-horizontal" name="registerForm" novalidate>
+		<fieldset>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">*Username:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputEmail1"
+						name="email" placeholder="Username" ng-model="user.username"
+						required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputIme1" class="col-lg-2 control-label">*Ime:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputIme1" name="ime"
+						placeholder="Ime" ng-model="user.ime" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPrezime1" class="col-lg-2 control-label">*Prezime:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputPrezime1"
+						name="prezime" placeholder="Prezime" ng-model="user.prezime"
+						required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword1" class="col-lg-2 control-label">*Lozinka:</label>
+				<div class="col-lg-10">
+					<input type="password" class="form-control" id="inputPassword1"
+						name="lozinka" placeholder="Password" ng-model="user.lozinka"
+						ng-change="checkPasswords()" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputConfirmPassword" class="col-lg-2 control-label">*Potvrdi
+					Lozinku</label>
+				<div class="col-lg-10">
+					<input type="password" class="form-control"
+						id="inputConfirmPassword" name="potvrdaLozinke"
+						placeholder="Confirm Password" ng-model="user.potvrdaLozinke"
+						ng-change="checkPasswords()" required> <span
+						ng-show="notSamePasswords" class="control-label"
+						style="color: red"> <span
+						class="glyphicon glyphicon-remove-sign"></span>Passwords do not
+						match!
+					</span>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="selectRadnikUloga" class="col-lg-2 control-label">*Uloga:</label>
+				<div class="col-lg-10">
+					<select id="userRole" class="form-control" ng-model="user.uloga" ng-init="'LEKAR'">
+						<option value="LEKAR">Lekar</option>
+						<option value="ADMIN">Administrator</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<br> <label>Fields with * are required!</label>
+			</div>
+
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-primary"
+						ng-click="registerKorisnik(user, registerForm)">Register</button>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>

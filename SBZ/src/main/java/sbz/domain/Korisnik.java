@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 //@Inheritance(strategy=InheritanceType.JOINED)
 public class Korisnik implements Serializable {
@@ -30,6 +33,7 @@ public class Korisnik implements Serializable {
 	private String prezime;
 	
 	@Column(nullable = false)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String lozinka;
 	
 	@Column(nullable = false)

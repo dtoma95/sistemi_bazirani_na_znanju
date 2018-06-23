@@ -15,6 +15,7 @@ import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
+import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 import sbz.service.GettersService;
 
@@ -45,6 +46,16 @@ public class GettersController {
 	}
 
 	@RequestMapping(
+			value = "/getBolest/{pacijentId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getBolest(@PathVariable("pacijentId") Long pacijentId) {
+		
+		Bolest retval = this.gettersService.getBolest(pacijentId);
+		return new ResponseEntity<Bolest>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
 			value = "/getBolesti",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,6 +63,16 @@ public class GettersController {
 		
 		List<Bolest> retval = this.gettersService.getBolesti();
 		return new ResponseEntity<List<Bolest>>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/getSimptom/{pacijentId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getSimptom(@PathVariable("pacijentId") Long pacijentId) {
+		
+		Simptom retval = this.gettersService.getSimptom(pacijentId);
+		return new ResponseEntity<Simptom>(retval, HttpStatus.OK);
 	}
 	
 	@RequestMapping(
@@ -65,6 +86,16 @@ public class GettersController {
 	}
 	
 	@RequestMapping(
+			value = "/getLek/{pacijentId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getLek(@PathVariable("pacijentId") Long pacijentId) {
+		
+		Lek retval = this.gettersService.getLek(pacijentId);
+		return new ResponseEntity<Lek>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
 			value = "/getLekovi",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,6 +103,26 @@ public class GettersController {
 		
 		List<Lek> retval = this.gettersService.getLekovi();
 		return new ResponseEntity<List<Lek>>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/getSastojak/{pacijentId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getSastojak(@PathVariable("pacijentId") Long pacijentId) {
+		
+		Sastojak retval = this.gettersService.getSastojak(pacijentId);
+		return new ResponseEntity<Sastojak>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/getSastojci",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getSastojci() {
+		
+		List<Sastojak> retval = this.gettersService.getSastojci();
+		return new ResponseEntity<List<Sastojak>>(retval, HttpStatus.OK);
 	}
 	
 	@RequestMapping(

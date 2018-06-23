@@ -1,0 +1,29 @@
+//created on: May 9, 2017
+package drools.spring.rules;
+
+import sbz.domain.Simptom;
+import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
+import sbz.domain.Lek;
+import sbz.domain.Sastojak;
+import sbz.domain.LekType;
+import sbz.domain.Pacijent;
+import java.util.List;
+
+query "upit nadji bolesti" (Dijagnoza $param)
+    	$b : Bolest($simps: simptomi)
+    	$val : Number(intValue >= 1) from accumulate(
+        	$s: Simptom($s memberOf $simps ) from $param.getSimptomi(),
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+        )
+end
+
+query "upit nadji simptome opsti" (Bolest $bolest)
+    	$s : Simptom($bolest.getSimptomi().contains($s))
+end
+
+query "upit nadji simptome specificni" (Bolest $bolest)
+    	$s : Simptom($bolest.getSpecificniSimptomi().contains($s))
+end

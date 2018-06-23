@@ -1,0 +1,74 @@
+<div ng-include="'angular/partials/Admin/adminNavBar.html'"></div>
+
+<div ng-controller="adminLekController"
+	style="margin-left: 50px; width: 700px;">
+
+	<h3>Sastojak:</h3>
+	<form class="form-horizontal" name="registerForm" novalidate>
+		<fieldset>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">Naziv:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputEmail1"
+						name="email" placeholder="Naziv" ng-model="item.naziv" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="selectRadnikUloga" class="col-lg-2 control-label">*Tip:</label>
+				<div class="col-lg-10">
+					<select id="userRole" class="form-control" ng-model="item.ltype" ng-init="'ANTIBIOTIK'">
+						<option value="ANTIBIOTIK">Antibiotik</option>
+						<option value="ANALGETIK">Analgetik</option>
+						<option value="OSTALO">Ostalo</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="col-sm-6">
+				<h4>Sastojci:</h4>
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<table class="table table-striped table-hover ">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Ukloni</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="i in item.sastojci">
+								<td>{{i.naziv}}</td>
+								<td><button ng-click="removeSastojak(i)"
+										class="btn btn-primary">Ukolni</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div style="overflow: scroll; height: 350px; overflow: auto">
+					<h4>Izaberi Sastojke:</h4>
+					<table class="table table-striped  table-hover">
+						<thead>
+							<tr>
+								<th>Naziv</th>
+								<th>Add</th>
+							</tr>
+						</thead>
+						<tr ng:repeat="i in sastojci | orderBy:'+naziv'">
+							<td>{{i.naziv}}</td>
+							<td><button ng-click="addSastojak(i)" class="btn btn-primary">Dodaj</button></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-success"
+						ng-click="submit(item, registerForm)">Submit</button>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>

@@ -79,7 +79,8 @@ insert into bolest_simptomi(bolest_id, simptomi_id) values (4, 10)
 ---HIPERTENZIJA-------
 insert into bolest(id, opis, btype) values (5, 'Hipertenzija', 1)
 insert into simptom(id, naziv, svalue, stype) values (15, 'Visok pritisak', 0, 0)
-
+insert into simptom(id, naziv, svalue, stype) values (30, 'U poslednjih 6 meseci zabelezen Visko pritisak bar 10 puta', 0, 2)
+insert into bolest_simptomi(bolest_id, simptomi_id) values (5, 30)
 
 ---DIJABETIS-------
 insert into bolest(id, opis, btype) values (6, 'Dijabetis', 1)

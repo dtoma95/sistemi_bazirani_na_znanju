@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sbz.DTO.DTOBolesti;
 import sbz.DTO.DTOValidacija;
+import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
 import sbz.domain.Pacijent;
+import sbz.domain.Simptom;
 import sbz.service.LekarService;
 
 @RestController
@@ -96,4 +98,29 @@ public class LekarController {
 		return new ResponseEntity<Dijagnoza>(d, HttpStatus.OK);
 	}
 	
+	@RequestMapping(
+			value = "/upitBolesti",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> upitBolest(@RequestBody Dijagnoza dijagnoza) {
+		
+		List<Bolest> retval =lekarService.uptiBolesti(dijagnoza);
+		
+		
+		return new ResponseEntity<List<Bolest>>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/upitSimptomi",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> upitSimptomi(@RequestBody Dijagnoza dijagnoza) {
+		
+		List<Simptom> retval =lekarService.uptiSimptomi(dijagnoza);
+		
+		
+		return new ResponseEntity<List<Simptom>>(retval, HttpStatus.OK);
+	}
 }

@@ -45,9 +45,14 @@ restaurants.controller('lekarDijagnozaController', function($scope, lekarDijagno
 		
 		lekarDijagnozaFactory.getSimptomi().success(function (data) {
         	
-        	$scope.simptomi = {};
+        	$scope.simptomi = [];
         	$scope.mojiSimptomi = [];
-        	$scope.simptomi = data;
+        	for (var i = 0; i < data.length; i++) {
+        		if(data[i].stype != "SPECIAL")
+        			$scope.simptomi.push(data[i]);
+        	}
+        	
+        	//$scope.simptomi = data;
 		});
 		
 		lekarDijagnozaFactory.getBolesti().success(function (data) {
@@ -220,3 +225,89 @@ restaurants.controller('izvestajiController', function($scope, izvestajiFactory)
 	}
 	
 });
+
+restaurants.controller('upitBolestiController', function($scope, upitFactory){
+
+	function init() {
+		
+		upitFactory.getSimptomi().success(function (data) {
+        	
+        	$scope.simptomi = {};
+        	$scope.mojiSimptomi = [];
+        	$scope.simptomi = data;
+		});
+		
+    }
+
+	if(localStorage.getItem("user") != null)
+		init();
+
+	$scope.upit = function() {
+		var user = JSON.parse(localStorage.getItem("user"));
+		
+		upitFactory.upitBolesti(user, $scope.mojiSimptomi).success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+        		data[i].simptomiStr = "";
+        		for (var j = 0; j < data[i].simptomi.length; j++) {
+            		data[i].simptomiStr += data[i].simptomi[j].naziv + ", ";
+            		
+            	}
+        		data[i].simptomiStr = data[i].simptomiStr.substring(0, data[i].simptomiStr.length - 2);
+        		
+        		data[i].specificniStr = "";
+        		for (var j = 0; j < data[i].specificniSimptomi.length; j++) {
+            		data[i].specificniStr += data[i].specificniSimptomi[j].naziv + ", ";
+            		
+            	}
+        		data[i].specificniStr = data[i].specificniStr.substring(0, data[i].specificniStr.length - 2);
+        	}
+        	$scope.bolesti = data;
+		});
+	}
+	
+	$scope.addSimptom = function(i) {
+		$scope.mojiSimptomi.push(i);
+		
+		var comArr = eval( $scope.simptomi );
+		var index = comArr.indexOf(i);	
+		if( index === -1 ) {
+			alert( "Something gone wrong" );
+		}
+		$scope.simptomi.splice( index, 1 );
+	}
+	
+	$scope.removeSimptom = function(i) {
+		$scope.simptomi.push(i);
+		
+		var comArr = eval( $scope.mojiSimptomi );
+		var index = comArr.indexOf(i);	
+		if( index === -1 ) {
+			alert( "Something gone wrong" );
+		}
+		$scope.mojiSimptomi.splice( index, 1 );
+	}
+});
+
+restaurants.controller('upitSimptomiController', function($scope, upitFactory){
+
+	function init() {
+		
+		upitFactory.getBolesti().success(function (data) {
+        	
+        	$scope.bolesti = {};
+        	$scope.bolesti = data;
+		});
+    }
+
+	if(localStorage.getItem("user") != null)
+		init();
+	
+	$scope.izaberiBolest = function(i){
+		var user = JSON.parse(localStorage.getItem("user"));
+		upitFactory.upitSimptomi(user, i).success(function (data) {
+			$scope.bolest = i;
+        	$scope.simptomi = data;
+		});
+	}	
+});
+

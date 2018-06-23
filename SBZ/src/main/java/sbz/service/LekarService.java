@@ -10,13 +10,15 @@ import sbz.domain.Dijagnoza;
 import sbz.domain.Pacijent;
 import sbz.domain.Lek;
 import sbz.domain.Sastojak;
+import sbz.domain.Simptom;
 
 public interface LekarService {
 	public HashMap<String, KieSession> getSesije();
 
 	public void setSesije(HashMap<String, KieSession> sesije);
 	
-	
+	List<Bolest> uptiBolesti(Dijagnoza d);
+	List<Simptom> uptiSimptomi(Dijagnoza d);
 	
 	Dijagnoza addDijagnoza(Dijagnoza d, long pacijentId);
 	Dijagnoza changeDijagnoza(Dijagnoza d);

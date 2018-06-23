@@ -11,6 +11,18 @@ restaurants.config(function($routeProvider){
 	//Admin
 	.when('/admin', {
 		templateUrl : 'angular/partials/Admin/admin.html'
+	}).when('/registerKorisnik', {
+		templateUrl : 'angular/partials/Admin/registerKorisnik.html'
+	}).when('/adminPacijent', {
+		templateUrl : 'angular/partials/Admin/adminPacijent.html'
+	}).when('/adminBolest', {
+		templateUrl : 'angular/partials/Admin/adminBolest.html'
+	}).when('/adminSimptom', {
+		templateUrl : 'angular/partials/Admin/adminSimptom.html'
+	}).when('/adminSastojakt', {
+		templateUrl : 'angular/partials/Admin/adminSastojakt.html'
+	}).when('/adminLek', {
+		templateUrl : 'angular/partials/Admin/adminLek.html'
 	})
 	
 	//Lekar
@@ -24,6 +36,10 @@ restaurants.config(function($routeProvider){
 		templateUrl : 'angular/partials/Lekar/dijagnozaLekovi.html'
 	}).when('/izvestaji', {
 		templateUrl : 'angular/partials/Lekar/lekarIzvestaji.html'
+	}).when('/upitBolesti', {
+		templateUrl : 'angular/partials/Lekar/upitBolesti.html'
+	}).when('/upitSimptomi', {
+		templateUrl : 'angular/partials/Lekar/upitSimptomi.html'
 	})
 	;
 });

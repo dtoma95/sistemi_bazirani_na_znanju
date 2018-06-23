@@ -75,3 +75,31 @@ restaurants.factory('izvestajiFactory', function($http) {
 	
 	return factory;
 });
+
+restaurants.factory('upitFactory', function($http) {
+	
+	var factory = {};
+	
+	factory.getSimptomi = function() {
+		
+		return $http.get('/getSimptomi');
+	}
+	
+	factory.getBolesti = function() {
+		
+		return $http.get('/getBolesti');
+	}
+	
+	factory.upitBolesti = function(user, simptomi) {
+		
+		return $http.post('/lekar/upitBolesti/', {"lekar": user, "simptomi": simptomi});
+	}
+	
+	factory.upitSimptomi = function(user, bolest) {
+		
+		return $http.post('/lekar/upitSimptomi/', {"lekar": user, "bolest": bolest});
+	}
+	
+	return factory;
+});
+

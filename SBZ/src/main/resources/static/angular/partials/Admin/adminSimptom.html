@@ -1,0 +1,37 @@
+<div ng-include="'angular/partials/Admin/adminNavBar.html'"></div>
+
+<div ng-controller="adminSimptomController"
+	style="margin-left: 50px; width: 700px;">
+
+	<h3>Simptom:</h3>
+	<form class="form-horizontal" name="registerForm" novalidate>
+		<fieldset>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-2 control-label">*Naziv:</label>
+				<div class="col-lg-10">
+					<input type="text" class="form-control" id="inputEmail1"
+						name="email" placeholder="Naziv" ng-model="item.naziv"
+						required>
+				</div>
+			</div>
+			NORMAL, NUMERIC, SPECIAL
+			<div class="form-group">
+				<label for="selectRadnikUloga" class="col-lg-2 control-label">*Tip:</label>
+				<div class="col-lg-10">
+					<select id="userRole" class="form-control" ng-model="item.stype" ng-init="'NORMAL'">
+						<option value="NORMAL">Obican</option>
+						<option value="SPECIAL">Specijalan</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-success"
+						ng-click="submit(item, registerForm)">Submit</button>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>

@@ -32,9 +32,9 @@ public class AuthenticationController {
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> loginUser(@RequestBody Korisnik logovanje) {
-
+		System.out.println(logovanje.getLozinka());
+		
 		Korisnik k = authenticationService.ulogujKorisnika(logovanje);
-		k.setLozinka("");
 		return new ResponseEntity<Korisnik>(k, HttpStatus.OK);
 	}
 	

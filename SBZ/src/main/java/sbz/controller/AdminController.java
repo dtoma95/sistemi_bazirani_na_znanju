@@ -29,7 +29,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(
-			value = "/registerLekar",
+			value = "/registerKorisnik",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.TEXT_PLAIN_VALUE)

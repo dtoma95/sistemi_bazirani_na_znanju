@@ -6,6 +6,7 @@ import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
+import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 
 public interface GettersService {
@@ -13,9 +14,16 @@ public interface GettersService {
 	Pacijent getPacijent(long pacijentId);
 	
 	List<Bolest> getBolesti();
+	Bolest getBolest(long id);
+	
 	List<Simptom> getSimptomi();
+	Simptom getSimptom(long id);
+	
 	List<Lek> getLekovi();
+	Lek getLek(long id);
+	
+	List<Sastojak> getSastojci();
+	Sastojak getSastojak(long id);
+
 	List<Dijagnoza> getKarton(long pacijentId);
-	
-	
 }

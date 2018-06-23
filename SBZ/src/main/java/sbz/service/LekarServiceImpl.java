@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
 //import org.kie.api.runtime.KieContainer;
 //import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,5 +238,51 @@ public class LekarServiceImpl implements LekarService {
 			System.out.println(d.getBolest().getOpis());
 		else
 			System.out.println("null");
+	}
+
+	@Override
+	public List<Bolest> uptiBolesti(Dijagnoza d) {
+		KieSession kieSession = sesije.get(d.getLekar().getUsername());
+		
+		
+		QueryResults results = kieSession.getQueryResults( "upit nadji bolesti", d );
+		
+		ArrayList<Bolest> retval = new ArrayList<Bolest>();
+		ArrayList<Integer> vals = new ArrayList<Integer>();
+		for ( QueryResultsRow row : results ) {
+		    Bolest b = ( Bolest ) row.get( "$b" );
+		    Integer br = ( Integer ) row.get( "$val" );
+		    int i = 0;
+		    for (i = 0; i<vals.size(); i++) {
+				if(vals.get(i) < br) {
+					break;
+				}
+			}
+		    vals.add(i, br);
+		    retval.add(i, b);
+		}
+		return retval;
+	}
+
+	@Override
+	public List<Simptom> uptiSimptomi(Dijagnoza d) {
+		KieSession kieSession = sesije.get(d.getLekar().getUsername());
+		
+		Bolest b = this.bolestRepository.findOne(d.getBolest().getId());
+		
+		ArrayList<Simptom> retval = new ArrayList<Simptom>();
+		
+		QueryResults results = kieSession.getQueryResults( "upit nadji simptome specificni", b );
+		for ( QueryResultsRow row : results ) {
+			Simptom s = ( Simptom ) row.get( "$s" );
+		    retval.add(s);
+		}
+		
+		results = kieSession.getQueryResults( "upit nadji simptome opsti", b );
+		for ( QueryResultsRow row : results ) {
+			Simptom s = ( Simptom ) row.get( "$s" );
+		    retval.add(s);
+		}
+		return retval;
 	}
 }
