@@ -90,6 +90,9 @@ public class LekarServiceImpl implements LekarService {
 		
 		this.dijagnozaRepository.save(d);
 		
+		p.getDijagnoze().add(d);
+		this.pacijentRepository.save(p);
+		
 		return d;
 	}
 

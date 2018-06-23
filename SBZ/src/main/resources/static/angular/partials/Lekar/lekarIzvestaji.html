@@ -1,0 +1,38 @@
+
+<div ng-include="'angular/partials/Lekar/lekarNavBar.html'"></div>
+
+<div ng-controller="izvestajiController" style="margin-top: 100px; width:700px;" class="container center_div">
+<div class = "row">
+
+	<button  ng-disabled="pressed == 'izvestaj1'" class="btn btn-primary" style="margin: 5px;" ng-click="izvestaj('izvestaj1')">Hronicna oboljenja</button>
+	<button ng-disabled="pressed == 'izvestaj2'" class="btn btn-primary" style="margin: 5px;" ng-click="izvestaj('izvestaj2')">Moguci zavisnici</button>
+	<button ng-disabled="pressed == 'izvestaj3'" class="btn btn-primary" style="margin: 5px;" ng-click="izvestaj('izvestaj3')">Oslabljeni imunitet</button>
+
+</div>
+<div ng-show="pacijenti.length == 0">
+	<h3>Nista nije pronadjeno.</h3>
+</div>
+<div ng-show="pacijenti.length > 0">
+<h3>Pacijenti:</h3>
+<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Pregled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="i in pacijenti">
+		<td>{{i.id}}</td>
+		<td>{{i.ime}}</td>
+		<td>{{i.prezime}}</td>
+		<td>
+			<button class="btn btn-primary" ng-click="viewItem(i)">Pregled</button><br>
+		</td>
+	</tr>
+  </tbody>
+</table>
+</div>
+</div>

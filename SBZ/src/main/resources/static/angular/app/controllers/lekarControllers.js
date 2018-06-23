@@ -196,3 +196,27 @@ restaurants.controller('dijagnozaLekoviController', function($scope, dijagnozaLe
 	}
 	
 });
+
+restaurants.controller('izvestajiController', function($scope, izvestajiFactory){
+	function init() {
+		
+    }
+
+	if(localStorage.getItem("user") != null)
+		init();
+	
+	$scope.izvestaj = function(izvestaj){
+		var user = JSON.parse(localStorage.getItem("user"));
+		$scope.pressed = izvestaj;
+		//var dijagnoza = {"lekar" : user, "simptomi" : $scope.mojiSimptomi, "bolest" : i}
+		izvestajiFactory.izvestaj(izvestaj, user.username).success(function (data) {
+			$scope.pacijenti = data;
+			
+		});
+	}
+	
+	$scope.viewItem = function(item) {
+		window.location = '#/pacijent?id='+ item.id;
+	}
+	
+});

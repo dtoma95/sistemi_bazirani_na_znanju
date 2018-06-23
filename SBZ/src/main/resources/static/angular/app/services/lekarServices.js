@@ -63,3 +63,15 @@ restaurants.factory('dijagnozaLekoviFactory', function($http) {
 	
 	return factory;
 });
+
+restaurants.factory('izvestajiFactory', function($http) {
+	
+	var factory = {};
+	
+	factory.izvestaj = function(izvestaj, lekar) {
+		
+		return $http.get('/lekar/izvestaj/'+izvestaj+'/'+lekar);
+	}
+	
+	return factory;
+});

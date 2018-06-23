@@ -22,6 +22,8 @@ restaurants.config(function($routeProvider){
 		templateUrl : 'angular/partials/Lekar/lekarDijagnoza.html'
 	}).when('/dijagnozaLekovi', {
 		templateUrl : 'angular/partials/Lekar/dijagnozaLekovi.html'
+	}).when('/izvestaji', {
+		templateUrl : 'angular/partials/Lekar/lekarIzvestaji.html'
 	})
 	;
 });

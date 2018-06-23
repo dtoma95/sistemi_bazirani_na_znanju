@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 //@Inheritance(strategy=InheritanceType.JOINED)
 public class Pacijent implements Serializable {
@@ -27,12 +29,15 @@ public class Pacijent implements Serializable {
 	private String prezime;
 	
 	@ManyToMany
+	@JsonIgnore
 	private List<Dijagnoza> dijagnoze;
 	
 	@ManyToMany
+	@JsonIgnore
 	private List<Lek> alergijeLek;
 	
 	@ManyToMany
+	@JsonIgnore
 	private List<Sastojak> alergijeSastojci;
 
 	public Pacijent() {}
