@@ -92,7 +92,9 @@ restaurants.controller('lekarDijagnozaController', function($scope, lekarDijagno
 		lekarDijagnozaFactory.getPreporuka(id, user, $scope.mojiSimptomi).success(function (data) {
 			
         	$scope.preporuka = data;
-		});
+		}).error(function (response, status) {
+			toastr.error(response);
+	    });
 	}
 	
 	$scope.addSimptom = function(i) {
@@ -142,7 +144,9 @@ restaurants.controller('dijagnozaLekoviController', function($scope, dijagnozaLe
 		dijagnozaLekoviFactory.getPacijent(id).success(function (data) {
 			
         	$scope.pacijent = data;
-		});
+		}).error(function (response, status) {
+			toastr.error(response);
+	    });
     }
 
 	if(localStorage.getItem("user") != null)
@@ -169,12 +173,16 @@ restaurants.controller('dijagnozaLekoviController', function($scope, dijagnozaLe
 			if($scope.alergije.length == 0){
 				$scope.alergije = undefined;
 				dijagnozaLekoviFactory.dodajDijagnozu(dijagnoza, id).success(function (data) {
-					toast("Uspesno dodata Dijagnoza");
+					//toast("Uspesno dodata Dijagnoza");
+					toastr.success("Dijagnoza uspesno dodata");
 					window.location = '#/lekar';
-				});
+					
+				}).error(function (response, status) {
+					toastr.error(response);
+			    });
 			}
 			else
-				toast("Error: Pacijent je alergican na neke od lekova ili sastojaka");
+				toastr.error("Error: Pacijent je alergican na neke od lekova ili sastojaka");
 		});
 	}
 	
@@ -217,7 +225,9 @@ restaurants.controller('izvestajiController', function($scope, izvestajiFactory)
 		izvestajiFactory.izvestaj(izvestaj, user.username).success(function (data) {
 			$scope.pacijenti = data;
 			
-		});
+		}).error(function (response, status) {
+			toastr.error(response);
+	    });
 	}
 	
 	$scope.viewItem = function(item) {
@@ -262,7 +272,9 @@ restaurants.controller('upitBolestiController', function($scope, upitFactory){
         		data[i].specificniStr = data[i].specificniStr.substring(0, data[i].specificniStr.length - 2);
         	}
         	$scope.bolesti = data;
-		});
+		}).error(function (response, status) {
+			toastr.error(response);
+	    });
 	}
 	
 	$scope.addSimptom = function(i) {
@@ -307,7 +319,9 @@ restaurants.controller('upitSimptomiController', function($scope, upitFactory){
 		upitFactory.upitSimptomi(user, i).success(function (data) {
 			$scope.bolest = i;
         	$scope.simptomi = data;
-		});
+		}).error(function (response, status) {
+			toastr.error(response);
+	    });
 	}	
 });
 

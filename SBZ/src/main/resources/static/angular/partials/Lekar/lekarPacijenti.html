@@ -10,7 +10,6 @@
       <th>ID</th>
       <th>Ime</th>
       <th>Prezime</th>
-      <th>Pregled</th>
       <th>Dijagnoza</th>
     </tr>
   </thead>
@@ -20,10 +19,7 @@
 		<td>{{i.ime}}</td>
 		<td>{{i.prezime}}</td>
 		<td>
-			<button class="btn btn-primary" ng-click="viewItem(i)">Pregled</button><br>
-		</td>
-		<td>
-			<button class="btn btn-primary" ng-click="dijagnoza(i)" >Dijagnoza</button><br>
+			<button class="btn btn-success" ng-click="dijagnoza(i)" >Dijagnoza</button><br>
 		</td>
 	</tr>
   </tbody>

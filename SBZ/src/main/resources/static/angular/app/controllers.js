@@ -14,6 +14,18 @@ restaurants.controller('navBarLekarController1', function($scope){
 	if(user == null || user.uloga != "LEKAR"){
 		window.location = "#/";		
 	}
+	else{
+		var socket = new SockJS('/nekiEndpoint');
+		var stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			
+				stompClient.subscribe("/javiGotovo/", function(data) {
+					var message = data.body;
+					toastr.warning(message);
+				});
+		});
+	}
+	
 	$scope.logout = function(){
     	localStorage.removeItem("user");
     }	
@@ -40,7 +52,9 @@ restaurants.controller('loginController', function($scope, loginFactory){
 				if (data.username == null || data.username == "") {
 					toast("Invalid username or password!");
 				}
-			});
+			}).error(function (response, status) {
+				toastr.error(response);
+		    });
 		}
 	}
 });

@@ -20,12 +20,26 @@ import sbz.domain.Pacijent;
 import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 import sbz.service.GettersService;
+import sbz.service.MonitoringService;
 
 @RestController
 public class GettersController {
 
 	@Autowired
 	private GettersService gettersService;
+	
+	@Autowired
+	private MonitoringService monitoringService;
+	
+	@RequestMapping(
+			value = "/sendSim/{broj}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> sendSim(@PathVariable("broj") int broj) {
+		
+		this.monitoringService.dodajOtkucajSimulation(broj);
+		return new ResponseEntity<String>("gotovo", HttpStatus.OK);
+	}
 	
 	@RequestMapping(
 			value = "/getPacijent/{pacijentId}",

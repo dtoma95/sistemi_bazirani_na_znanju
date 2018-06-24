@@ -2,8 +2,13 @@ package sbz.service;
 
 import java.util.List;
 
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
+import org.kie.api.KieServices;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +55,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         	throw new BadRequestException("Invalid Login!");
         }
         if(korisnik.getUloga().equals(Uloga.LEKAR)) {
-        	KieSession kieSession = kieContainer.newKieSession();
+    		KieServices ks = KieServices.Factory.get();
+            KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
+            kbconf.setOption(EventProcessingOption.STREAM);
+            KieBase kbase = kieContainer.newKieBase(kbconf);
+            
+            KieSessionConfiguration ksconf1 = ks.newKieSessionConfiguration();
+            KieSession kieSession = kbase.newKieSession(ksconf1, null);
+            
         	List<Bolest> bolesti = (List<Bolest>) bolestRepository.findAll();
     		for (Bolest b : bolesti) {
     			System.out.println("Adding - " + b.getOpis());
