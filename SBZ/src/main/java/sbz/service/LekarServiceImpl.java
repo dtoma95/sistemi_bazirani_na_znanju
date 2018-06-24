@@ -96,6 +96,12 @@ public class LekarServiceImpl implements LekarService {
 		p.getDijagnoze().add(d);
 		this.pacijentRepository.save(p);
 		
+		p.getDijagnoze().size();
+		for (Dijagnoza d1 : p.getDijagnoze()) {
+			d1.getPropisano().size();
+			d1.getSimptomi().size();
+		}
+		
 		this.updateSesije(p);
 		
 		return d;

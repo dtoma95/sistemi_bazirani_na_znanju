@@ -1,16 +1,38 @@
-/*
- * 
- * var socket = new SockJS('/nekiEndpoint');
-	var stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
+restaurants.controller('lekarKartonController', function($scope, lekarPacijentiFactory){
+	
+	function init() {
+		var user = JSON.parse(localStorage.getItem("user"));
+		
 		var path = window.location.href;
 		var id = path.split("=")[1];
-		stompClient.subscribe("/javiGotovo/" + id, function(data) {
-			init();
+		lekarPacijentiFactory.getKarton(id).success(function (data) {
+			for (var i = 0; i < data.length; i++) {
+        		data[i].lekoviStr = "";
+        		for (var j = 0; j < data[i].propisano.length; j++) {
+            		data[i].lekoviStr += data[i].propisano[j].naziv + ", ";
+            		
+            	}
+        		data[i].lekoviStr = data[i].lekoviStr.substring(0, data[i].lekoviStr.length - 2);
+        		
+        		data[i].simptomiStr = "";
+        		for (var j = 0; j < data[i].simptomi.length; j++) {
+            		data[i].simptomiStr += data[i].simptomi[j].naziv + ", ";
+            		
+            	}
+        		data[i].simptomiStr = data[i].simptomiStr.substring(0, data[i].simptomiStr.length - 2);
+        		
+        		datum1 = new Date(data[i].datum);
+        		data[i].datumStr = 
+        			datum1.getDate() + "/" + (datum1.getMonth()+1) + "/" + (datum1.getUTCFullYear());
+        	}
+        	$scope.items = {};
+        	$scope.items = data;
 		});
+    }
 
-	});
- */
+	if(localStorage.getItem("user") != null)
+		init();
+});
 
 restaurants.controller('lekarPacijentiController', function($scope, lekarPacijentiFactory){
 	
@@ -30,8 +52,8 @@ restaurants.controller('lekarPacijentiController', function($scope, lekarPacijen
 		window.location = '#/lekarDijagnoza?id='+ item.id;
 	}
 	
-	$scope.viewItem = function(item) {
-		window.location = '#/pacijent?id='+ item.id;
+	$scope.pregled = function(item) {
+		window.location = '#/karton?id='+ item.id;
 	}
 	
 });
@@ -230,8 +252,8 @@ restaurants.controller('izvestajiController', function($scope, izvestajiFactory)
 	    });
 	}
 	
-	$scope.viewItem = function(item) {
-		window.location = '#/pacijent?id='+ item.id;
+	$scope.pregled = function(item) {
+		window.location = '#/karton?id='+ item.id;
 	}
 	
 });

@@ -7,6 +7,11 @@ restaurants.factory('lekarPacijentiFactory', function($http) {
 		return $http.get('/getPacijenti');
 	}
 	
+	factory.getKarton = function(id) {
+		
+		return $http.get('/getKarton/'+id);
+	}
+	
 	return factory;
 });
 

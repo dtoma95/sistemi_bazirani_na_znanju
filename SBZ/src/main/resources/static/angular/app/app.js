@@ -52,6 +52,8 @@ restaurants.config(function($routeProvider){
 		templateUrl : 'angular/partials/Lekar/upitBolesti.html'
 	}).when('/upitSimptomi', {
 		templateUrl : 'angular/partials/Lekar/upitSimptomi.html'
+	}).when('/karton', {
+		templateUrl : 'angular/partials/Lekar/lekarKarton.html'
 	})
 	;
 });

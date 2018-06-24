@@ -162,10 +162,10 @@ public class GettersController {
 	}
 	
 	@RequestMapping(
-			value = "/getKarton/{pacijentId}",
+			value = "/getKarton/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getKarton(@PathVariable("pacientId") Long pacijentId) {
+	public ResponseEntity<?> getKarton(@PathVariable("id") Long pacijentId) {
 		
 		List<Dijagnoza> retval = this.gettersService.getKarton(pacijentId);
 		return new ResponseEntity<List<Dijagnoza>>(retval, HttpStatus.OK);
