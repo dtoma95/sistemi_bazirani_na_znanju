@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sbz.domain.Bolest;
+import sbz.domain.Dijagnoza;
 import sbz.domain.Korisnik;
 import sbz.domain.Pacijent;
 import sbz.domain.Simptom;
@@ -64,6 +65,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     		List<Pacijent> pacijenti = (List<Pacijent>) pacijentRepository.findAll();
     		for (Pacijent p : pacijenti) {
     			p.getDijagnoze().size();
+    			for (Dijagnoza d : p.getDijagnoze()) {
+					d.getPropisano().size();
+					d.getSimptomi().size();
+				}
     			kieSession.insert(p);
     		}
     		

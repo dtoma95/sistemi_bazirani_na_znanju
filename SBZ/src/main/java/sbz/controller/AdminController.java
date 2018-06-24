@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -121,6 +122,113 @@ public class AdminController {
 		}
 		
 		this.adminService.addSastojak(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/editSimptom",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> editSimptom(@Validated @RequestBody Simptom sastojak, WebRequest request,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<String>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		}
+		this.adminService.changeSimptom(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/editPacijent",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> editPacijent(@Validated @RequestBody Pacijent sastojak, WebRequest request,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<String>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		}
+		this.adminService.changePacijent(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/editBolest",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> editBolest(@Validated @RequestBody Bolest sastojak, WebRequest request,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<String>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		}
+		this.adminService.changeBolest(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/editLek",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> editLek(@Validated @RequestBody Lek sastojak, WebRequest request,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<String>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		}
+		this.adminService.changeLek(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/editSastojak",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> editSastojak(@Validated @RequestBody Sastojak sastojak, WebRequest request,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<String>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+		}
+		this.adminService.changeSastojak(sastojak);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+
+	@RequestMapping(
+			value = "/deleteSimptom/{id}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> deleteSimptom(@PathVariable("id") Long id) {
+		this.adminService.deleteSimptom(id);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/deletePacijent/{id}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> deletePacijent(@PathVariable("id") Long id) {
+		this.adminService.deletePacijent(id);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/deleteBolest/{id}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> deleteBolest(@PathVariable("id") Long id) {
+		this.adminService.deleteBolest(id);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/deleteLek/{id}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> deleteLek(@PathVariable("id") Long id) {
+		this.adminService.deleteLek(id);
+		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
+	}
+	@RequestMapping(
+			value = "/deleteSastojak/{id}",
+			method = RequestMethod.DELETE,
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<?> deleteSastojak(@PathVariable("id") Long id) {
+		this.adminService.deleteSastojak(id);
 		return new ResponseEntity<String>("Successful!", HttpStatus.OK);
 	}
 	

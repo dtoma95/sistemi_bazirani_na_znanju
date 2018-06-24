@@ -31,5 +31,7 @@ public interface LekarService {
 	List<Lek> validacijaLeka(Dijagnoza d, long pacijentId);
 	List<Sastojak> validacijaSastojaka(Dijagnoza d, long pacijentId);
 	
-	void test();
+	void updateSesije(Object o);
+	void insertSesije(Object o);
+	void deleteSesije(Object o);
 }

@@ -10,27 +10,25 @@ import sbz.domain.Simptom;
 public interface AdminService {
 	
 	Korisnik registerLekar(Korisnik k);
-	Korisnik changeLekar(Korisnik k);
-	void deleteLekar(Korisnik k);
 	
 	Pacijent registerPacijent(Pacijent p);
 	Pacijent changePacijent(Pacijent p);
-	void deletePacijent(Pacijent p);
+	void deletePacijent(Long p);
 	
 	Bolest addBolest(Bolest bolest);
 	Bolest changeBolest(Bolest bolest);
-	void deleteBolest(Bolest bolest);
+	void deleteBolest(Long bolest);
 	
 	Simptom addSimptom(Simptom simptom);
 	Simptom changeSimptom(Simptom simptom);
-	void deleteSimptom(Simptom simptom);
+	void deleteSimptom(Long simptom);
 	
 	Lek addLek(Lek lek);
 	Lek changeLek(Lek lek);
-	void deleteLek(Lek lek);
+	void deleteLek(Long lek);
 	
 	Sastojak addSastojak(Sastojak sastojak);
 	Sastojak changeSastojak(Sastojak sastojak);
-	void deleteSastojak(Sastojak sastojak);
+	void deleteSastojak(Long sastojak);
 	
 }

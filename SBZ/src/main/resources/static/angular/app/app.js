@@ -20,9 +20,21 @@ restaurants.config(function($routeProvider){
 	}).when('/adminSimptom', {
 		templateUrl : 'angular/partials/Admin/adminSimptom.html'
 	}).when('/adminSastojakt', {
-		templateUrl : 'angular/partials/Admin/adminSastojakt.html'
+		templateUrl : 'angular/partials/Admin/adminSastojak.html'
 	}).when('/adminLek', {
 		templateUrl : 'angular/partials/Admin/adminLek.html'
+	}).when('/sviKorisnici', {
+		templateUrl : 'angular/partials/Admin/sviKorisnici.html'
+	}).when('/sviPacijenti', {
+		templateUrl : 'angular/partials/Admin/sviPacijenti.html'
+	}).when('/sviLekovi', {
+		templateUrl : 'angular/partials/Admin/sviLekovi.html'
+	}).when('/sviBolesti', {
+		templateUrl : 'angular/partials/Admin/sviBolesti.html'
+	}).when('/sviSimptomi', {
+		templateUrl : 'angular/partials/Admin/sviSimptomi.html'
+	}).when('/sviSastojci', {
+		templateUrl : 'angular/partials/Admin/sviSastojci.html'
 	})
 	
 	//Lekar

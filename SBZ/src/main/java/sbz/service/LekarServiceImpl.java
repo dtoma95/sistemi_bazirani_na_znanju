@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 //import org.kie.api.runtime.KieContainer;
@@ -100,13 +101,11 @@ public class LekarServiceImpl implements LekarService {
 
 	@Override
 	public Dijagnoza changeDijagnoza(Dijagnoza d) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void deleteDijagnoza(Dijagnoza d) {
-		// TODO Auto-generated method stub
 		Bolest b = new Bolest();
 		b.setOpis("Prehlada");
 		b.setSimptomi(new ArrayList<Simptom>());
@@ -183,62 +182,6 @@ public class LekarServiceImpl implements LekarService {
 	public void setSesije(HashMap<String, KieSession> sesije) {
 		this.sesije = sesije;
 	}
-	
-	@Override
-	public void test() {
-		KieSession kieSession = kieContainer.newKieSession();
-		List<Bolest> bolesti = (List<Bolest>) bolestRepository.findAll();
-		for (Bolest b : bolesti) {
-			System.out.println("Adding - " + b.getOpis());
-			kieSession.insert(b);
-		}
-		
-		List<Simptom> simptomi = (List<Simptom>) simptomRepository.findAll();
-		for (Simptom s : simptomi) {
-			kieSession.insert(s);
-		}
-		
-		Dijagnoza d = new Dijagnoza();
-		d.setSimptomi(new ArrayList<Simptom>());
-		
-		Simptom s1 = new Simptom(100L, "Curenje iz nosa", 0,  SimptomType.NORMAL);
-		d.getSimptomi().add(s1);
-		s1 = new Simptom(101L, "Bol u grlu", 0,  SimptomType.NORMAL);
-		d.getSimptomi().add(s1);
-		s1 = new Simptom(102L, "Glavobolja", 0,  SimptomType.NORMAL);
-		d.getSimptomi().add(s1);
-		s1 = new Simptom(103L, "Kijanje", 0,  SimptomType.NORMAL);
-		d.getSimptomi().add(s1);
-		s1 = new Simptom(104L, "Kasalj", 0,  SimptomType.NORMAL);
-		d.getSimptomi().add(s1);
-		s1 = new Simptom(104L, "Temperatura", 39,  SimptomType.NUMERIC);
-		d.getSimptomi().add(s1);
-		
-		Pacijent p = new Pacijent();
-		p.setDijagnoze(new ArrayList<Dijagnoza>());
-		Dijagnoza d1 = new Dijagnoza();
-		Bolest b = new Bolest();
-		b.setOpis("Groznica");
-		d1.setBolest(b);
-		
-		d1.setSimptomi(new ArrayList<Simptom>());
-		Simptom s3 = new Simptom(100L, "Visok pritisak", 0,  SimptomType.NORMAL);
-		d1.getSimptomi().add(s3);
-		d1.setDatum(new Date());
-		p.getDijagnoze().add(d1);
-		p.getDijagnoze().add(d1);
-		p.getDijagnoze().add(d1);
-		
-		d.setPacijent(p);
-		kieSession.insert(d);
-		
-		kieSession.getAgenda().getAgendaGroup("bolesti").setFocus();
-		System.out.println(kieSession.fireAllRules());
-		if(d.getBolest() != null)
-			System.out.println(d.getBolest().getOpis());
-		else
-			System.out.println("null");
-	}
 
 	@Override
 	public List<Bolest> uptiBolesti(Dijagnoza d) {
@@ -284,5 +227,41 @@ public class LekarServiceImpl implements LekarService {
 		    retval.add(s);
 		}
 		return retval;
+	}
+
+	@Override
+	public void updateSesije(Object o) {
+		for (String s : sesije.keySet()) {
+			KieSession kieSession = sesije.get(s);
+			FactHandle fh = this.getFactHandle(kieSession, o);
+			if(fh != null)
+				kieSession.update(fh, o);
+		}
+	}
+
+	@Override
+	public void insertSesije(Object o) {
+		for (String s : sesije.keySet()) {
+			KieSession kieSession = sesije.get(s);
+			kieSession.insert(o);
+		}
+	}
+
+	@Override
+	public void deleteSesije(Object o) {
+		for (String s : sesije.keySet()) { 
+			KieSession kieSession = sesije.get(s);
+			FactHandle fh = this.getFactHandle(kieSession, o);
+			if(fh != null)
+				kieSession.delete(fh);
+		}
+	}
+	
+	private FactHandle getFactHandle(KieSession ks, Object o) {
+		for (Object obj : ks.getObjects()) {
+			if(obj.equals(o))
+				return ks.getFactHandle(obj);
+		}
+		return null;
 	}
 }

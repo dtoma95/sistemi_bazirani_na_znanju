@@ -60,6 +60,31 @@ restaurants.factory('adminAllFactory', function($http) {
 		return $http.post('/admin/editSimptom', item);
 	}
 	
+	factory.deletePacijent = function(item) {		
+		return $http.delete('/admin/deletePacijent/'+ item.id);
+	}
+	factory.deleteSastojak = function(item) {		
+		return $http.delete('/admin/deleteSastojak/'+ item.id);
+	}
+	factory.deleteLek = function(item) {		
+		return $http.delete('/admin/deleteLek/'+ item.id);
+	}
+	factory.deleteBolest = function(item) {		
+		return $http.delete('/admin/deleteBolest/'+ item.id);
+	}
+	factory.deleteSimptom = function(item) {		
+		return $http.delete('/admin/deleteSimptom/'+ item.id);
+	}
+	
+	factory.getKorisnici = function() {
+		return $http.get('/getKorisnici');
+	}
+	factory.getBolesti = function() {
+		return $http.get('/getBolesti');
+	}
+	factory.getPacijenti = function() {
+		return $http.get('/getPacijenti');
+	}
 	factory.getSimptomi = function() {
 		return $http.get('/getSimptomi');
 	}

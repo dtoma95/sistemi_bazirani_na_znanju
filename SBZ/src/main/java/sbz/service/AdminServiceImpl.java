@@ -21,6 +21,9 @@ import sbz.repository.SimptomRepository;
 public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
+	private LekarService lekarService;
+	
+	@Autowired
     private KorisnikRepository korisnikRepository;
 
 	@Autowired
@@ -52,34 +55,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Korisnik changeLekar(Korisnik k) {
-		Korisnik k1 = this.korisnikRepository.findByUsername(k.getUsername());
-
-		if (k1 == null) {
-			throw new BadRequestException("Nepostojeci korisnik!");
-		}
-
-		this.korisnikRepository.save(k);
-
-		return k;
-	}
-
-	@Override
-	public void deleteLekar(Korisnik k) {
-		Korisnik k1 = this.korisnikRepository.findByUsername(k.getUsername());
-
-		if (k1 == null) {
-			throw new BadRequestException("Nepostojeci korisnik!");
-		}
-
-		this.korisnikRepository.delete(k);
-		
-	}
-
-	@Override
 	public Pacijent registerPacijent(Pacijent p) {
 		this.pacijentRepository.save(p);
-
+		lekarService.insertSesije(p);
 		return p;
 	}
 	
@@ -91,25 +69,33 @@ public class AdminServiceImpl implements AdminService {
 			throw new BadRequestException("Nepostojeci pacijent!");
 		}
 		this.pacijentRepository.save(p);
-
+		lekarService.updateSesije(p);
 		return p;
 	}
 
 	@Override
-	public void deletePacijent(Pacijent p) {
-		Pacijent p1 = this.pacijentRepository.findOne(p.getId());
+	public void deletePacijent(Long id) {
+		Pacijent p1 = this.pacijentRepository.findOne(id);
 		
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojeci pacijent!");
 		}
-		this.pacijentRepository.delete(p);
-		
+		try {	
+			this.pacijentRepository.delete(p1);
+		} catch (Exception e) {
+			throw new BadRequestException("Nije moguce obrisati objekat sa kojim su povezani drugi objekti!");
+		}
+		lekarService.deleteSesije(p1);
 	}
 
 	@Override
 	public Bolest addBolest(Bolest bolest) {
-		this.bolestRepository.save(bolest);
-
+		try {	
+			this.bolestRepository.save(bolest);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
+		lekarService.insertSesije(bolest);
 		return bolest;
 	}
 	
@@ -120,25 +106,38 @@ public class AdminServiceImpl implements AdminService {
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojeca bolest!");
 		}
-		this.bolestRepository.save(bolest);
-
+		try {	
+			this.bolestRepository.save(bolest);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
+		lekarService.updateSesije(bolest);
 		return bolest;
 	}
 
 	@Override
-	public void deleteBolest(Bolest bolest) {
-		Bolest p1 = this.bolestRepository.findOne(bolest.getId());
+	public void deleteBolest(Long id) {
+		Bolest p1 = this.bolestRepository.findOne(id);
 		
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojeca bolest!");
 		}
-		this.bolestRepository.delete(bolest);
+		try {	
+			this.bolestRepository.delete(p1);
+		} catch (Exception e) {
+			throw new BadRequestException("Nije moguce obrisati objekat sa kojim su povezani drugi objekti!");
+		}
+		lekarService.deleteSesije(p1);
 	}
 	
 	@Override
 	public Simptom addSimptom(Simptom simptom) {
-		this.simptomRepository.save(simptom);
-
+		try {	
+			this.simptomRepository.save(simptom);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
+		lekarService.insertSesije(simptom);
 		return simptom;
 	}
 	
@@ -147,21 +146,31 @@ public class AdminServiceImpl implements AdminService {
 		Simptom p1 = this.simptomRepository.findOne(simptom.getId());
 		
 		if (p1 == null) {
-			throw new BadRequestException("Nepostojeca bolest!");
+			throw new BadRequestException("Nepostojeci simptom!");
 		}
-		this.simptomRepository.save(simptom);
-
+		
+		try {	
+			this.simptomRepository.save(simptom);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
+		lekarService.updateSesije(simptom);
 		return simptom;
 	}
 
 	@Override
-	public void deleteSimptom(Simptom simptom) {
-		Simptom p1 = this.simptomRepository.findOne(simptom.getId());
+	public void deleteSimptom(Long id) {
+		Simptom p1 = this.simptomRepository.findOne(id);
 		
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojeci simptom!");
 		}
-		this.simptomRepository.delete(simptom);
+		try {	
+			this.simptomRepository.delete(p1);
+		} catch (Exception e) {
+			throw new BadRequestException("Nije moguce obrisati objekat sa kojim su povezani drugi objekti!");
+		}
+		lekarService.deleteSesije(p1);
 	}
 
 	@Override
@@ -176,26 +185,40 @@ public class AdminServiceImpl implements AdminService {
 		Lek p1 = this.lekRepository.findOne(lek.getId());
 		
 		if (p1 == null) {
-			throw new BadRequestException("Nepostojecai lek!");
+			throw new BadRequestException("Nepostojeci lek!");
 		}
-		this.lekRepository.save(lek);
+		
+		try {	
+			this.lekRepository.save(lek);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
 
 		return lek;
 	}
 
 	@Override
-	public void deleteLek(Lek lek) {
-		Lek p1 = this.lekRepository.findOne(lek.getId());
+	public void deleteLek(Long id) {
+		Lek p1 = this.lekRepository.findOne(id);
 		
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojecai lek!");
 		}
-		this.lekRepository.delete(lek);
+		
+		try {	
+			this.lekRepository.delete(p1);
+		} catch (Exception e) {
+			throw new BadRequestException("Nije moguce obrisati objekat sa kojim su povezani drugi objekti!");
+		}
 	}
 
 	@Override
 	public Sastojak addSastojak(Sastojak sastojak) {
-		this.sastojakRepository.save(sastojak);
+		try {	
+			this.sastojakRepository.save(sastojak);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
 
 		return sastojak;
 	}
@@ -207,19 +230,27 @@ public class AdminServiceImpl implements AdminService {
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojecai lek!");
 		}
-		this.sastojakRepository.save(sastojak);
+		try {	
+			this.sastojakRepository.save(sastojak);
+		} catch (Exception e) {
+			throw new BadRequestException("Naziv mora da bude jednistven!");
+		}
 
 		return sastojak;
 	}
 
 	@Override
-	public void deleteSastojak(Sastojak sastojak) {
-		Sastojak p1 = this.sastojakRepository.findOne(sastojak.getId());
+	public void deleteSastojak(Long id) {
+		Sastojak p1 = this.sastojakRepository.findOne(id);
 		
 		if (p1 == null) {
 			throw new BadRequestException("Nepostojecai lek!");
 		}
-		this.sastojakRepository.delete(sastojak);
+		try {	
+			this.sastojakRepository.delete(p1);
+		} catch (Exception e) {
+			throw new BadRequestException("Nije moguce obrisati objekat sa kojim su povezani drugi objekti!");
+		}	
 
 	}
 

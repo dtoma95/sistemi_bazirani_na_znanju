@@ -189,6 +189,15 @@ restaurants.controller('adminLekController', function($scope, adminAllFactory){
 		if(id != undefined && id != ""){
 			adminAllFactory.getLek(id).success(function(data) {
 				$scope.item = data;
+				for (var i =0; i< $scope.item.sastojci.length; i++){
+					for (var j = $scope.sastojci.length - 1; j >= 0; --j) {
+					    if ($scope.sastojci[j].id == $scope.item.sastojci[i].id) {
+					    	$scope.sastojci.splice(j,1);
+					    	break;
+					    }
+					}
+				}
+				
 				$scope.editing = true;
 			}).error(function (response, status) {
 				toastr.error(response);
@@ -250,6 +259,7 @@ restaurants.controller('adminPacijentController', function($scope, adminAllFacto
 		var path = window.location.href;
 		var id = path.split("=")[1];
 		$scope.editing = false;
+		
 		adminAllFactory.getLekovi().success(function (data) {  	
         	$scope.lekovi = [];
         	$scope.lekovi = data;
@@ -259,10 +269,30 @@ restaurants.controller('adminPacijentController', function($scope, adminAllFacto
         	$scope.sastojci = data;
 		});
 		
+		$scope.item = {};
+		$scope.item.alergijeLek = [];
+		$scope.item.alergijeSastojci = [];
 		
 		if(id != undefined && id != ""){
 			adminAllFactory.getPacijent(id).success(function(data) {
 				$scope.item = data;
+				
+				for (var i =0; i< $scope.item.alergijeLek.length; i++){
+					for (var j = $scope.lekovi.length - 1; j >= 0; --j) {
+					    if ($scope.lekovi[j].id == $scope.item.alergijeLek[i].id) {
+					    	$scope.lekovi.splice(j,1);
+					    	break;
+					    }
+					}
+				}
+				for (var i =0; i< $scope.item.alergijeSastojci.length; i++){
+					for (var j = $scope.sastojci.length - 1; j >= 0; --j) {
+					    if ($scope.sastojci[j].id == $scope.item.alergijeSastojci[i].id) {
+					    	$scope.sastojci.splice(j,1);
+					    	break;
+					    }
+					}
+				}
 				$scope.editing = true;
 			}).error(function (response, status) {
 				toastr.error(response);
@@ -355,6 +385,23 @@ restaurants.controller('adminBolestController', function($scope, adminAllFactory
 		if(id != undefined && id != ""){
 			adminAllFactory.getBolest(id).success(function(data) {
 				$scope.item = data;
+				for (var i =0; i< $scope.item.simptomi.length; i++){
+					for (var j = $scope.simptomi.length - 1; j >= 0; --j) {
+					    if ($scope.simptomi[j].id == $scope.item.simptomi[i].id) {
+					    	$scope.simptomi.splice(j,1);
+					    	break;
+					    }
+					}
+				}
+				for (var i =0; i< $scope.item.specificniSimptomi.length; i++){
+					for (var j = $scope.simptomi.length - 1; j >= 0; --j) {
+					    if ($scope.simptomi[j].id == $scope.item.specificniSimptomi[i].id) {
+					    	$scope.simptomi.splice(j,1);
+					    	break;
+					    }
+					}
+				}
+				
 				$scope.editing = true;
 			}).error(function (response, status) {
 				toastr.error(response);
@@ -428,5 +475,144 @@ restaurants.controller('adminBolestController', function($scope, adminAllFactory
 			alert( "Something gone wrong" );
 		}
 		$scope.item.specificniSimptomi.splice( index, 1 );
+	}
+});
+
+restaurants.controller('sviPacijentiController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getPacijenti().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/adminPacijent';
+	}
+	$scope.izmeni = function(item){
+		window.location = '#/adminPacijent?id='+ item.id;
+	}
+	$scope.obrisi = function(item) {
+		adminAllFactory.deletePacijent(item).success(function (data) {
+        	toastr.success("Uspeh!");
+        	init();
+		}).error(function (response, status) {
+			toastr.error(response);
+    	});
+	}
+});
+
+restaurants.controller('sviKorisniciController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getKorisnici().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/registerKorisnik';
+	}
+});
+
+restaurants.controller('sviBolestiController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getBolesti().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/adminBolest';
+	}
+	$scope.izmeni = function(item){
+		window.location = '#/adminBolest?id='+ item.id;
+	}
+	$scope.obrisi = function(item) {
+		adminAllFactory.deleteBolest(item).success(function (data) {
+        	toastr.success("Uspeh!");
+        	init();
+		}).error(function (response, status) {
+			toastr.error(response);
+    	});
+	}
+});
+
+restaurants.controller('sviLekoviController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getLekovi().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/adminLek';
+	}
+	$scope.izmeni = function(item){
+		window.location = '#/adminLek?id='+ item.id;
+	}
+	$scope.obrisi = function(item) {
+		adminAllFactory.deletePacijent(item).success(function (data) {
+        	toastr.success("Uspeh!");
+        	init();
+		}).error(function (response, status) {
+			toastr.error(response);
+    	});
+	}
+});
+
+restaurants.controller('sviSimptomiController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getSimptomi().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/adminSimptom';
+	}
+	$scope.izmeni = function(item){
+		window.location = '#/adminSimptom?id='+ item.id;
+	}
+	$scope.obrisi = function(item) {
+		adminAllFactory.deleteSimptom(item).success(function (data) {
+        	toastr.success("Uspeh!");
+        	init();
+		}).error(function (response, status) {
+			toastr.error(response);
+    	});
+	}
+});
+
+restaurants.controller('sviSastojciController', function($scope, adminAllFactory){
+	function init() {		
+		adminAllFactory.getSastojci().success(function (data) {
+        	$scope.items = {};
+        	$scope.items = data;
+		});
+    }
+	if(localStorage.getItem("user") != null)
+		init();
+	$scope.novi = function() {
+		window.location = '#/adminSastojak';
+	}
+	$scope.izmeni = function(item){
+		window.location = '#/adminSastojak?id='+ item.id;
+	}
+	$scope.obrisi = function(item) {
+		adminAllFactory.deleteSastojak(item).success(function (data) {
+        	toastr.success("Uspeh!");
+        	init();
+		}).error(function (response, status) {
+			toastr.error(response);
+    	});
 	}
 });

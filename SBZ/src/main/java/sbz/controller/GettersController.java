@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import sbz.DTO.DTOPacijent;
 import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
+import sbz.domain.Korisnik;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
 import sbz.domain.Sastojak;
@@ -32,7 +34,7 @@ public class GettersController {
 	public ResponseEntity<?> getPacijent(@PathVariable("pacijentId") Long pacijentId) {
 		
 		Pacijent retval = this.gettersService.getPacijent(pacijentId);
-		return new ResponseEntity<Pacijent>(retval, HttpStatus.OK);
+		return new ResponseEntity<DTOPacijent>(new DTOPacijent(retval), HttpStatus.OK);
 	}
 	
 	@RequestMapping(
@@ -123,6 +125,26 @@ public class GettersController {
 		
 		List<Sastojak> retval = this.gettersService.getSastojci();
 		return new ResponseEntity<List<Sastojak>>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/getKorisnik/{pacijentId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getKorisnik(@PathVariable("pacijentId") Long pacijentId) {
+		
+		Korisnik retval = this.gettersService.getKorisnik(pacijentId);
+		return new ResponseEntity<Korisnik>(retval, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
+			value = "/getKorisnici",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getKorisnici() {
+		
+		List<Korisnik> retval = this.gettersService.getKorisnici();
+		return new ResponseEntity<List<Korisnik>>(retval, HttpStatus.OK);
 	}
 	
 	@RequestMapping(

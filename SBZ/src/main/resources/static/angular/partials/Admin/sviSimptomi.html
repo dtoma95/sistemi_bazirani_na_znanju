@@ -1,0 +1,30 @@
+<div ng-include="'angular/partials/Admin/adminNavBar.html'"></div>
+
+<div ng-controller="sviSimptomiController" style="margin-top: 100px; width:700px;" class="container center_div">
+<h3>Simptomi:</h3>
+<div class="row"><button class="btn btn-success" ng-click="novi(i)" >Dodaj Novi</button><br></div>
+<table style="width:700px; margin-left:50px;" class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Naziv</th>
+      <th>Tip</th>
+      <th>Izmeni</th>
+      <th>Obrisi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="i in items">
+		<td>{{i.id}}</td>
+		<td>{{i.naziv}}</td>
+		<td>{{i.stype}}</td>
+		<td>
+			<button class="btn btn-warning" ng-click="izmeni(i)">Izmeni</button><br>
+		</td>
+		<td>
+			<button class="btn btn-danger" ng-click="obrisi(i)" >Obrisi</button><br>
+		</td>
+	</tr>
+  </tbody>
+</table>
+</div>

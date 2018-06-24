@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
+import sbz.domain.Korisnik;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
 import sbz.domain.Sastojak;
 import sbz.domain.Simptom;
 import sbz.exceptions.BadRequestException;
 import sbz.repository.BolestRepository;
+import sbz.repository.KorisnikRepository;
 import sbz.repository.LekRepository;
 import sbz.repository.PacijentRepository;
 import sbz.repository.SastojakRepository;
@@ -35,6 +37,9 @@ public class GettersServiceImpl implements GettersService {
 	
 	@Autowired
 	private  SastojakRepository sastojakRepository;
+	
+	@Autowired
+	private  KorisnikRepository korisnikRepository;
 	
 	@Override
 	public List<Pacijent> getPacijenti() {
@@ -109,6 +114,20 @@ public class GettersServiceImpl implements GettersService {
 	@Override
 	public Sastojak getSastojak(long id) {
 		Sastojak p = sastojakRepository.findOne(id);
+		if (p == null) {
+			throw new BadRequestException("Nepostojeci objekat!");
+		}
+		return p;
+	}
+
+	@Override
+	public List<Korisnik> getKorisnici() {
+		return (List<Korisnik>) korisnikRepository.findAll();
+	}
+
+	@Override
+	public Korisnik getKorisnik(long id) {
+		Korisnik p = korisnikRepository.findOne(id);
 		if (p == null) {
 			throw new BadRequestException("Nepostojeci objekat!");
 		}

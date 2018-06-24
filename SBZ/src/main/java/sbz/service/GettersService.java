@@ -4,6 +4,7 @@ import java.util.List;
 
 import sbz.domain.Bolest;
 import sbz.domain.Dijagnoza;
+import sbz.domain.Korisnik;
 import sbz.domain.Lek;
 import sbz.domain.Pacijent;
 import sbz.domain.Sastojak;
@@ -25,5 +26,8 @@ public interface GettersService {
 	List<Sastojak> getSastojci();
 	Sastojak getSastojak(long id);
 
+	List<Korisnik> getKorisnici();
+	Korisnik getKorisnik(long id);
+	
 	List<Dijagnoza> getKarton(long pacijentId);
 }

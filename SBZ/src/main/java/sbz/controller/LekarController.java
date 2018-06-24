@@ -27,17 +27,6 @@ public class LekarController {
 	@Autowired
 	private LekarService lekarService;
 	
-	
-	@RequestMapping(
-			value = "/izvestajHronicna",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> izvestajHronicna() {
-		
-		this.lekarService.test();
-		return new ResponseEntity<String>("string", HttpStatus.OK);
-	}
-	
 	@RequestMapping(
 			value = "/dijagnoza/{pacientId}",
 			method = RequestMethod.POST,
