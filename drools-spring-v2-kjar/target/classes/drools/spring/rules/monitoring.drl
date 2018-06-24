@@ -1,0 +1,62 @@
+//created on: May 9, 2017
+package drools.spring.rules;
+
+import sbz.domain.events.Dogadjaj;
+import sbz.domain.events.DogadjajType;
+import sbz.domain.events.HitnoEvent;
+import sbz.domain.Dijagnoza;
+import sbz.domain.Pacijent;
+import java.util.List;
+
+
+rule "Problem sa kiseonikom"
+	agenda-group "monitoring"
+    when
+    	Dogadjaj($pid: pacijentId, dtype == DogadjajType.KISEONIK_PAD, value < 70.0) 
+        not(
+            Dogadjaj(pacijentId==$pid, dtype == DogadjajType.KISEONIK_RAST) 
+            over window:time(15m)
+        )
+    then
+        insert(new HitnoEvent($pid, "Problem sa kiseonikom"));
+        drools.halt();
+end
+
+/*
+
+*/
+
+rule "Ubrzan srcani ritam"
+	agenda-group "monitoring"
+    when
+    	Dogadjaj($pid: pacijentId, dtype == DogadjajType.OTKUCAJ)
+    	$n: Number(intValue > 25) from accumulate(
+    		$d: Dogadjaj(pacijentId==$pid, dtype == DogadjajType.OTKUCAJ)
+    		over window:time(10s),
+        	init(int total = 0;),
+        	action(total += 1;),
+        	result((int)total)
+    	)
+    then
+        insert(new HitnoEvent($pid, "Ubrzan srcani ritam"));
+        drools.halt();
+end
+
+rule "Hitno potrebna dijaliza"
+	agenda-group "monitoring"
+    when
+    	Dogadjaj($pid: pacijentId, dtype == DogadjajType.OTKUCAJ)
+    	Pacijent(id==$pid, $dijagnoze: dijagnoze)
+    	$n: Number(intValue > 10) from accumulate(
+    		$d: Dogadjaj(pacijentId == $pid, dtype == DogadjajType.OTKUCAJ)
+    		over window:time(10s), count($d)
+    	)
+    	Number(doubleValue < 100.0) from accumulate(
+    		Dogadjaj($a: value, pacijentId == $pid, dtype == DogadjajType.MOKRENJE)
+    		over window:time(12h), sum($a)
+    	)
+    	exists(Dijagnoza(bolest.getOpis() == "Hronicna bubrezna bolest")  from $dijagnoze)
+    then
+        insert(new HitnoEvent($pid, "Hitno potrebna dijaliza"));
+        drools.halt();
+end

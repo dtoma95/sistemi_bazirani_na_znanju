@@ -21,6 +21,7 @@ rule "da li radi"
     	System.out.println("radi");
 end
 
+
 rule "Validacija alergije na lekove"
 	agenda-group "alergijaLek"
     when
